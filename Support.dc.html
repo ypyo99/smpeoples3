@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>에스엠피플스㈜ 기술지원과 회사소개</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<script>
+(function() {
+  function getTarget(hash) {
+    if (!hash || hash === '#' || hash === '#top') return null;
+    try {
+      var id = decodeURIComponent(hash.replace(/^#/, ''));
+      return document.getElementById(id) || document.querySelector('[name="' + id + '"]') || document.querySelector(hash);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function smoothScrollTo(target) {
+    if (!target) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    var header = document.querySelector('header');
+    var headerOffset = header ? header.offsetHeight + 12 : 80;
+    var rect = target.getBoundingClientRect();
+    var targetY = window.pageYOffset + rect.top - headerOffset;
+    window.scrollTo({
+      top: Math.max(0, targetY),
+      behavior: 'smooth'
+    });
+  }
+
+  function handleHashScroll() {
+    if (window.location.hash) {
+      if (window.location.hash === '#top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return true;
+      }
+      var target = getTarget(window.location.hash);
+      if (target) {
+        setTimeout(function() {
+          smoothScrollTo(target);
+        }, 60);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  var observer = new MutationObserver(function() {
+    if (handleHashScroll()) {
+      observer.disconnect();
+    }
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!handleHashScroll() && document.body) {
+        observer.observe(document.body, { childList: true, subtree: true });
+      }
+    });
+  } else {
+    if (!handleHashScroll() && document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
+  window.addEventListener('load', function() {
+    handleHashScroll();
+    setTimeout(handleHashScroll, 200);
+    setTimeout(handleHashScroll, 600);
+  });
+  window.addEventListener('hashchange', handleHashScroll);
+  setTimeout(function() { observer.disconnect(); }, 5000);
+
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (!href) return;
+
+    var url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch (err) {
+      return;
+    }
+
+    var currentPath = window.location.pathname.replace(/\/$/, '');
+    var linkPath = url.pathname.replace(/\/$/, '');
+    var isSamePage = linkPath === currentPath || href.startsWith('#');
+
+    if (isSamePage && url.hash) {
+      e.preventDefault();
+      if (url.hash === '#top') {
+        history.pushState(null, '', window.location.pathname + window.location.search);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      var target = getTarget(url.hash);
+      if (target) {
+        history.pushState(null, '', url.hash);
+        smoothScrollTo(target);
+      }
+    }
+  });
+})();
+</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>
+body {
+  margin: 0;
+}
+header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 1px 4px rgba(15, 27, 45, 0.08) !important;
+}
+section[id], div[id], [id] {
+  scroll-margin-top: 80px !important;
+}
+a{color:#0B2E5E;text-decoration:none}
+a:hover{color:#1E6FE8}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #1E6FE8;outline-offset:2px}
+
+/* ===== 전역 부드러운 애니메이션 & 클릭 햅틱 효과 ===== */
+a, button {
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+a:active, button:active {
+  transform: scale(0.96) translateY(1px) !important;
+  transition-duration: 0.08s !important;
+}
+
+/* ===== 그래디언트 키프레임 애니메이션 ===== */
+@keyframes cta-gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== 1. 주요 CTA 그래디언트 버튼 (도입 문의 등) ===== */
+.btn-cta,
+header a[href*="contact"],
+form a[href*="mailto:"] {
+  background: linear-gradient(135deg, #1E6FE8 0%, #2563EB 35%, #0B2E5E 100%) !important;
+  background-size: 200% 200% !important;
+  animation: cta-gradient-move 6s ease infinite !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 14px rgba(30, 111, 232, 0.35) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.btn-cta:hover,
+header a[href*="contact"]:hover,
+form a[href*="mailto:"]:hover {
+  background-position: 100% 50% !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(30, 111, 232, 0.5), 0 2px 8px rgba(11, 46, 94, 0.4) !important;
+}
+
+/* 버튼 위를 흐르는 세련된 빛 반사(Shimmer Sweep) 효과 */
+.btn-cta::after,
+header a[href*="contact"]::after,
+form a[href*="mailto:"]::after {
+  content: '' !important;
+  position: absolute !important;
+  top: -50% !important;
+  left: -75% !important;
+  width: 50% !important;
+  height: 200% !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent) !important;
+  transform: rotate(25deg) !important;
+  pointer-events: none !important;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-cta:hover::after,
+header a[href*="contact"]:hover::after,
+form a[href*="mailto:"]:hover::after {
+  transform: rotate(25deg) translate(350%, 0) !important;
+}
+
+/* ===== 2. 히어로 & 섹션 흰색 그래디언트 버튼 ===== */
+.btn-white-hero,
+section a[href="Solutions.dc.html"][style*="background: #FFFFFF"],
+section a[href="Support.dc.html"][style*="background: #FFFFFF"] {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F4F7FC 100%) !important;
+  color: #0B2E5E !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+.btn-white-hero:hover,
+section a[href="Solutions.dc.html"][style*="background: #FFFFFF"]:hover,
+section a[href="Support.dc.html"][style*="background: #FFFFFF"]:hover {
+  background: linear-gradient(135deg, #FFFFFF 0%, #E8F1FD 100%) !important;
+  color: #1E6FE8 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 0 16px rgba(30, 111, 232, 0.35) !important;
+}
+
+/* ===== 3. 지도 및 아웃라인 액션 버튼 ===== */
+.btn-map-action,
+article a[style*="border-radius: 6px"] {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F5F8FC 100%) !important;
+  border: 1px solid #6B7A92 !important;
+  color: #0F1B2D !important;
+  box-shadow: 0 2px 6px rgba(15, 27, 45, 0.06) !important;
+}
+
+.btn-map-action:hover,
+article a[style*="border-radius: 6px"]:hover {
+  background: linear-gradient(135deg, #1E6FE8 0%, #0B2E5E 100%) !important;
+  border-color: transparent !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(30, 111, 232, 0.35) !important;
+}
+
+/* ===== 4. 상단 헤더 내비게이션 & 푸터 링크 애니메이션 ===== */
+nav[aria-label="주 메뉴"] a {
+  position: relative !important;
+}
+nav[aria-label="주 메뉴"] a::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 2px !important;
+  left: 50% !important;
+  width: 0 !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, #1E6FE8, #00D2FF) !important;
+  transition: width 0.24s cubic-bezier(0.16, 1, 0.3, 1), left 0.24s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border-radius: 2px !important;
+}
+nav[aria-label="주 메뉴"] a:hover::after,
+nav[aria-label="주 메뉴"] a[aria-current="page"]::after {
+  width: 100% !important;
+  left: 0 !important;
+}
+nav[aria-label="주 메뉴"] a:hover {
+  color: #1E6FE8 !important;
+  transform: translateY(-1px) !important;
+}
+
+header a[href^="tel:"] {
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+}
+header a[href^="tel:"]:hover {
+  background: linear-gradient(135deg, rgba(30, 111, 232, 0.08) 0%, rgba(30, 111, 232, 0.02) 100%) !important;
+  color: #1E6FE8 !important;
+  transform: translateY(-1px) !important;
+}
+
+header a[href="Main.dc.html"] img {
+  transition: transform 0.2s ease !important;
+}
+header a[href="Main.dc.html"]:hover img {
+  transform: scale(1.03) !important;
+}
+
+footer nav a:hover {
+  color: #60A5FA !important;
+  transform: translateX(2px) !important;
+}
+
+/* 문의처 전화번호 & 이메일 링크 */
+section a[href^="tel:"][style*="font-family"],
+section a[href^="mailto:"][style*="font-family"] {
+  display: inline-block !important;
+  transition: all 0.2s ease !important;
+}
+section a[href^="tel:"][style*="font-family"]:hover,
+section a[href^="mailto:"][style*="font-family"]:hover {
+  color: #1E6FE8 !important;
+  transform: translateX(3px) !important;
+}
+
+/* 거점 안내 카드 호버 인터랙션 */
+article[style*="border-radius: 8px"] {
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s ease !important;
+}
+article[style*="border-radius: 8px"]:hover {
+  box-shadow: 0 8px 24px rgba(15, 27, 45, 0.08) !important;
+  border-color: #BCD0EE !important;
+}
+</style>
+</helmet>
+<div style="background: #F3F6FB; color: #0F1B2D; font-family: 'IBM Plex Sans KR', system-ui, sans-serif; font-size: 16px; line-height: 1.65; word-break: keep-all">
+
+<header style="background: #FFFFFF; border-bottom: 1px solid #D3DAE6">
+<div style="max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px">
+<a href="Main.dc.html" style="display: flex; align-items: center; text-decoration: none"><img src="images/logo.svg" alt="에스엠피플스㈜" style="display: block; height: 48px; width: auto"></a>
+<nav aria-label="주 메뉴" style="display: flex; flex-wrap: wrap; gap: 4px 24px; flex-grow: 1; font-weight: 500">
+<a href="Solutions.dc.html" style="color: #0F1B2D; text-decoration: none; padding: 10px 0">솔루션 찾기</a>
+<a href="Main.dc.html#solutions" style="color: #0F1B2D; text-decoration: none; padding: 10px 0">사업 영역</a>
+<a href="#top" aria-current="page" style="color: #1E6FE8; font-weight: 700; text-decoration: none; padding: 10px 0">기술지원</a>
+<a href="Main.dc.html#cases" style="color: #0F1B2D; text-decoration: none; padding: 10px 0">사업 실적</a>
+<a href="Main.dc.html#news" style="color: #0F1B2D; text-decoration: none; padding: 10px 0">보안뉴스</a>
+<a href="#company" style="color: #0F1B2D; text-decoration: none; padding: 10px 0">회사소개</a>
+</nav>
+<a href="tel:05050551210" style="color: #0F1B2D; font-weight: 600; padding: 10px 4px">대표전화 0505-055-1210</a>
+<a href="Main.dc.html#contact" class="btn-cta" style="background: {{accent}}; color: #FFFFFF; font-weight: 600; padding: 10px 20px; border-radius: 6px; text-decoration: none">도입 문의</a>
+</div>
+</header>
+
+<section style="background: #0F1B2D; color: #FFFFFF">
+<div style="max-width: 1280px; margin: 0 auto; padding: 72px 32px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<div style="flex: 999 1 520px; min-width: 0">
+<p style="margin: 0 0 14px; color: #D2DDEF; font-weight: 500">기술지원</p>
+<h1 style="margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.25; font-weight: 700; letter-spacing: -0.02em">도입 상담부터 현장 구축,<br>운영 유지보수까지</h1>
+<p style="margin: 20px 0 0; font-size: 18px; color: #D2DDEF; max-width: 36em">고양 본사와 대전 지사를 통해 24/365 장애 예방과 신속한 복구를 지원합니다.</p>
+</div>
+<div style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; color: #0F1B2D; border-radius: 10px; padding: 28px; display: grid; gap: 18px">
+<div>
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">대표전화</h2>
+<p style="margin: 0; color: #4A5670">팩스 0505-65-1210</p>
+<a href="tel:05050551210" style="display: block; margin-top: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; color: {{accent}}">0505-055-1210</a>
+</div>
+<div style="padding-top: 18px; border-top: 1px solid #D3DAE6">
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">기술문의</h2>
+<p style="margin: 0; color: #4A5670">구축 · 연동 · 기술지원</p>
+<a href="mailto:tech@smpeoples.kr" style="display: block; margin-top: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; color: {{accent}}">tech@smpeoples.kr</a>
+</div>
+<div style="padding-top: 18px; border-top: 1px solid #D3DAE6">
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">영업문의</h2>
+<p style="margin: 0; color: #4A5670">솔루션 도입 · 견적 · 제안 요청</p>
+<a href="mailto:sales@smpeoples.kr" style="display: block; margin-top: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; color: {{accent}}">sales@smpeoples.kr</a>
+</div>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1280px; margin: 0 auto; padding: 88px 32px 0">
+<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.3; font-weight: 700; letter-spacing: -0.015em">통합 매니지먼트 서비스</h2>
+<div style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px">
+<div style="border-top: 2px solid #0F1B2D; padding-top: 14px"><h3 style="margin: 0 0 6px; font-size: 19px; font-weight: 700">통합유지보수</h3><p style="margin: 0">공공·국방·금융 100여 고객사의 시스템을 통합 유지보수합니다.</p></div>
+<div style="border-top: 2px solid #0F1B2D; padding-top: 14px"><h3 style="margin: 0 0 6px; font-size: 19px; font-weight: 700">상주·예방 점검</h3><p style="margin: 0">전문 기술인력 상주와 정기·긴급 예방 점검을 수행합니다.</p></div>
+<div style="border-top: 2px solid #0F1B2D; padding-top: 14px"><h3 style="margin: 0 0 6px; font-size: 19px; font-weight: 700">교육·기술이전</h3><p style="margin: 0">안정적인 인프라 운영을 위해 고객사 교육과 기술이전을 제공합니다.</p></div>
+<div style="border-top: 2px solid #0F1B2D; padding-top: 14px"><h3 style="margin: 0 0 6px; font-size: 19px; font-weight: 700">SLA 성과 관리</h3><p style="margin: 0">SLA를 기반으로 성과 지표를 체계적으로 관리합니다.</p></div>
+</div>
+</section>
+
+<section style="max-width: 1280px; margin: 0 auto; padding: 72px 32px 88px">
+<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.3; font-weight: 700; letter-spacing: -0.015em">가까운 거점에서 지원합니다</h2>
+<div style="margin-top: 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px">
+<article style="background: #FFFFFF; border: 1px solid #D3DAE6; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 14px; font-weight: 600; color: #4A5670">HEADQUARTERS · 수도권 거점</p>
+<h3 style="margin: 0; font-size: 24px; font-weight: 700">에스엠피플스㈜ 본사</h3>
+<p style="margin: 0; flex-grow: 1">경기도 고양시 덕양구 청초로 66 덕은리버워크 B동 1619, 1607호</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px">
+<a href="https://map.kakao.com/link/map/%EC%97%90%EC%8A%A4%EC%97%A0%ED%94%BC%ED%94%8C%EC%8A%A4%20%EB%B3%B8%EC%82%AC,37.57787320936661,126.86238524970182" class="btn-map-action" style="padding: 10px 16px; border: 1px solid #6B7A92; border-radius: 6px; font-weight: 600; color: #0F1B2D; text-decoration: none">카카오맵 길찾기</a>
+<a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EA%B3%A0%EC%96%91%EC%8B%9C%20%EB%8D%95%EC%96%91%EA%B5%AC%20%EC%B2%AD%EC%B4%88%EB%A1%9C%2066" class="btn-map-action" style="padding: 10px 16px; border: 1px solid #6B7A92; border-radius: 6px; font-weight: 600; color: #0F1B2D; text-decoration: none">네이버지도</a>
+</div>
+</article>
+<article style="background: #FFFFFF; border: 1px solid #D3DAE6; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 14px; font-weight: 600; color: #4A5670">BRANCH OFFICE · 중부권 거점</p>
+<h3 style="margin: 0; font-size: 24px; font-weight: 700">에스엠피플스㈜ 대전 지사</h3>
+<p style="margin: 0; flex-grow: 1">대전시 대덕구 대화동 611 가온비즈타워 1124호</p>
+<div style="display: flex; flex-wrap: gap: 8px; margin-top: 8px">
+<a href="https://map.kakao.com/link/map/%EC%97%90%EC%8A%A4%EC%97%A0%ED%94%BC%ED%94%8C%EC%8A%A4%20%EC%A7%80%EC%82%AC,36.366509,127.407302" class="btn-map-action" style="padding: 10px 16px; border: 1px solid #6B7A92; border-radius: 6px; font-weight: 600; color: #0F1B2D; text-decoration: none">카카오맵 길찾기</a>
+<a href="https://map.naver.com/p/search/%EB%8C%80%EC%A0%84%EC%8B%9C%20%EB%8C%80%EB%8D%95%EA%B5%AC%20%EB%8C%80%ED%99%94%EB%8F%99%20611%20%EA%B0%80%EC%98%A8%EB%B9%84%EC%A6%88%ED%83%80%EC%9B%8C" class="btn-map-action" style="padding: 10px 16px; border: 1px solid #6B7A92; border-radius: 6px; font-weight: 600; color: #0F1B2D; text-decoration: none">네이버지도</a>
+</div>
+</article>
+</div>
+</section>
+
+<section id="company" style="background: #FFFFFF; border-top: 1px solid #D3DAE6; border-bottom: 1px solid #D3DAE6">
+<div style="max-width: 1280px; margin: 0 auto; padding: 88px 32px; display: flex; flex-wrap: wrap; gap: 56px">
+<div style="flex: 999 1 560px; min-width: 0">
+<p style="margin: 0 0 12px; font-weight: 600; color: #4A5670">회사소개 · 기업 인사말</p>
+<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.35; font-weight: 700; letter-spacing: -0.015em">정보보안의 최전선에서<br>고객의 안전과 신뢰를 지킵니다</h2>
+<div style="margin-top: 24px; font-size: 17px; line-height: 1.8; display: grid; gap: 14px; max-width: 42em">
+<p style="margin: 0">에스엠피플스㈜에 방문해 주셔서 감사합니다.</p>
+<p style="margin: 0">우리는 정보보안의 최전선에서 고객의 안전과 신뢰를 지키기 위해 헌신하는 전문가들로 구성된 팀입니다.</p>
+<p style="margin: 0">오늘날의 디지털 환경은 끊임없이 변화하고 있으며, 우리는 이러한 변화에 적응하고 선제적으로 대응하기 위해 최신 기술과 전략을 채택하고 있습니다.</p>
+<p style="margin: 0">우리의 목표는 고객에게 최상의 보안 솔루션을 제공하여 소중한 정보를 안전하게 보호하는 것입니다.</p>
+<p style="margin: 0">고객의 안전은 우리의 최우선 과제입니다. 에스엠피플스와 함께 더 안전한 미래를 만들어 가십시오.</p>
+<p style="margin: 0">감사합니다.</p>
+<p style="margin: 8px 0 0; padding-top: 18px; border-top: 1px solid #D3DAE6; font-weight: 500">뿌리가 튼튼한 나무처럼, 한 계절 피고 지는 화려한 꽃보다는 늘 푸른 가지로 쉼터를 만들고 알찬 열매로 보답하는 회사가 되겠습니다.</p>
+<p style="margin: 0; color: #4A5670">에스엠피플스㈜ 대표이사 최정수</p>
+</div>
+</div>
+<dl style="flex: 1 1 360px; min-width: 0; margin: 0; align-self: flex-start; background: #F3F6FB; border-radius: 8px; padding: 28px; display: grid; gap: 16px">
+<div><dt style="font-size: 14px; font-weight: 600; color: #4A5670">법인명 / 슬로건</dt><dd style="margin: 2px 0 0; font-weight: 500">에스엠피플스㈜ (Security Managing Peoples)</dd></div>
+<div style="padding-top: 16px; border-top: 1px solid #D3DAE6"><dt style="font-size: 14px; font-weight: 600; color: #4A5670">대표이사</dt><dd style="margin: 2px 0 0; font-weight: 500">최정수</dd></div>
+<div style="padding-top: 16px; border-top: 1px solid #D3DAE6"><dt style="font-size: 14px; font-weight: 600; color: #4A5670">설립 / 매출액</dt><dd style="margin: 2px 0 0; font-weight: 500">2019년 7월 / 약 80억원</dd></div>
+<div style="padding-top: 16px; border-top: 1px solid #D3DAE6"><dt style="font-size: 14px; font-weight: 600; color: #4A5670">임직원</dt><dd style="margin: 2px 0 0; font-weight: 500">23명 (전문 엔지니어 20명)</dd></div>
+<div style="padding-top: 16px; border-top: 1px solid #D3DAE6"><dt style="font-size: 14px; font-weight: 600; color: #4A5670">주요 사업 분야</dt><dd style="margin: 2px 0 0; font-weight: 500">IT보안 H/W & S/W 판매·유통, IT기반 설계·구축, System 유지보수</dd></div>
+<div style="padding-top: 16px; border-top: 1px solid #D3DAE6"><dt style="font-size: 14px; font-weight: 600; color: #4A5670">본사 (수도권 거점)</dt><dd style="margin: 2px 0 0; font-weight: 500">경기도 고양시 덕양구 청초로 66 덕은리버워크 B동 1619, 1607호</dd></div>
+<div style="padding-top: 16px; border-top: 1px solid #D3DAE6"><dt style="font-size: 14px; font-weight: 600; color: #4A5670">지사 (중부권 거점)</dt><dd style="margin: 2px 0 0; font-weight: 500">대전시 대덕구 대화동 611 가온비즈타워 1124호</dd></div>
+</dl>
+</div>
+</section>
+
+<section style="max-width: 1280px; margin: 0 auto; padding: 88px 32px">
+<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.3; font-weight: 700; letter-spacing: -0.015em">핵심 역량</h2>
+<div style="margin-top: 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px">
+<div style="border-top: 2px solid #0F1B2D; padding-top: 16px"><span style="font-family: 'IBM Plex Mono', monospace; color: {{accent}}; font-weight: 500">01</span><h3 style="margin: 6px 0 8px; font-size: 21px; font-weight: 700">정보보안 전문가 그룹</h3><p style="margin: 0">정보보안의 최전선에서 고객의 안전과 신뢰를 지키기 위해 헌신하는 전문 엔지니어 및 보안 컨설팅 인력으로 구성되어 있습니다.</p></div>
+<div style="border-top: 2px solid #0F1B2D; padding-top: 16px"><span style="font-family: 'IBM Plex Mono', monospace; color: {{accent}}; font-weight: 500">02</span><h3 style="margin: 6px 0 8px; font-size: 21px; font-weight: 700">선제적 기술과 대응 전략</h3><p style="margin: 0">급변하는 디지털 환경과 고도화되는 보안 위협에 맞춰 최신 보안 아키텍처와 컴플라이언스 대응 전략을 선제적으로 제안합니다.</p></div>
+<div style="border-top: 2px solid #0F1B2D; padding-top: 16px"><span style="font-family: 'IBM Plex Mono', monospace; color: {{accent}}; font-weight: 500">03</span><h3 style="margin: 6px 0 8px; font-size: 21px; font-weight: 700">검증된 솔루션 라인업</h3><p style="margin: 0">망연계, SSL VPN, 웹방화벽, 취약점 진단, NAC, 시스템 접근제어, VDI까지 CC인증·GS인증·보안기능확인서를 갖춘 최상위 제품을 공급합니다.</p></div>
+<div style="border-top: 2px solid #0F1B2D; padding-top: 16px"><span style="font-family: 'IBM Plex Mono', monospace; color: {{accent}}; font-weight: 500">04</span><h3 style="margin: 6px 0 8px; font-size: 21px; font-weight: 700">고객 안전 최우선 기술지원</h3><p style="margin: 0">도입 상담부터 현장 구축, 운영 유지보수까지 고양 본사와 대전 지사를 통해 빠르고 책임감 있는 밀착 기술지원을 수행합니다.</p></div>
+</div>
+</section>
+
+<section id="organization" style="background: #FFFFFF; border-top: 1px solid #D3DAE6">
+<div style="max-width: 1280px; margin: 0 auto; padding: 88px 32px">
+<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.3; font-weight: 700; letter-spacing: -0.015em">조직 및 인원 현황</h2>
+<p style="margin: 12px 0 0; font-size: 18px; color: #4A5670">총 임직원 23명 중 20명이 전문 엔지니어이며, 본사와 대전 지사를 연계 운영합니다.</p>
+<div style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px">
+<div style="background: #F3F6FB; border-radius: 8px; padding: 20px"><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #0B2E5E">5명</div><strong>특급 기술자</strong><div style="color: #4A5670; font-size: 15px">대규모 PM 수행</div></div>
+<div style="background: #F3F6FB; border-radius: 8px; padding: 20px"><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #0B2E5E">2명</div><strong>고급 기술자</strong><div style="color: #4A5670; font-size: 15px">인프라 아키텍처</div></div>
+<div style="background: #F3F6FB; border-radius: 8px; padding: 20px"><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #0B2E5E">4명</div><strong>중급 기술자</strong><div style="color: #4A5670; font-size: 15px">네트워크·보안 구축</div></div>
+<div style="background: #F3F6FB; border-radius: 8px; padding: 20px"><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #0B2E5E">9명</div><strong>초급 기술자</strong><div style="color: #4A5670; font-size: 15px">상시 유지보수 운영</div></div>
+<div style="background: #F3F6FB; border-radius: 8px; padding: 20px"><div style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: #0B2E5E">3명</div><strong>경영·지원</strong><div style="color: #4A5670; font-size: 15px">전략 및 품질관리</div></div>
+</div>
+<h3 style="margin: 48px 0 0; font-size: 22px; font-weight: 700">조직 체계</h3>
+<div style="margin-top: 16px; background: #0B2E5E; color: #FFFFFF; border-radius: 8px 8px 0 0; padding: 14px 20px; text-align: center; font-weight: 700">대표이사</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; background: #D3DAE6; border: 1px solid #D3DAE6; border-top: 0; border-radius: 0 0 8px 8px; overflow: hidden">
+<div style="background: #FFFFFF; padding: 20px"><strong style="font-size: 18px">경영지원본부</strong><p style="margin: 6px 0 0; color: #4A5670">영업지원팀, 재무 및 경영기획</p></div>
+<div style="background: #FFFFFF; padding: 20px"><strong style="font-size: 18px">컨설팅사업부</strong><p style="margin: 6px 0 0; color: #4A5670">영업팀(공공·금융·기업), 보안 컴플라이언스 컨설팅</p></div>
+<div style="background: #FFFFFF; padding: 20px"><strong style="font-size: 18px">서비스사업부</strong><p style="margin: 6px 0 0; color: #4A5670">기술지원 1팀, 2팀, 3팀</p></div>
+<div style="background: #FFFFFF; padding: 20px"><strong style="font-size: 18px">전담연구부서</strong><p style="margin: 6px 0 0; color: #4A5670">기업부설연구소, 보안 신기술 연구 및 개발</p></div>
+</div>
+<p style="margin: 14px 0 0"><strong>대전지사</strong> <span style="color: #4A5670">컨설팅사업부(중부권 공공기관·지자체 제안·영업)와 서비스사업부(기술지원 1·2·3팀)를 운영합니다.</span></p>
+<h3 style="margin: 56px 0 0; font-size: 22px; font-weight: 700">기업 인증 및 기술 인가 현황</h3>
+<div style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px">
+<article style="border: 1px solid #D3DAE6; border-radius: 8px; padding: 20px"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #4A5670">ISO 9001:2015 · GERMAN CERT</p><h4 style="margin: 4px 0; font-size: 18px">품질경영시스템 인증</h4><p style="margin: 0; font-size: 15px">인증범위: 소프트웨어의 개발 및 유지 보수 (IAF Code: 33)</p></article>
+<article style="border: 1px solid #D3DAE6; border-radius: 8px; padding: 20px"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #4A5670">직접생산확인증명서 · 중소기업유통센터</p><h4 style="margin: 4px 0; font-size: 18px">정보시스템 유지관리 서비스</h4><p style="margin: 0; font-size: 15px">세부품명: 정보시스템유지관리서비스</p></article>
+<article style="border: 1px solid #D3DAE6; border-radius: 8px; padding: 20px"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #4A5670">직접생산확인증명서 · 중소기업유통센터</p><h4 style="margin: 4px 0; font-size: 18px">소프트웨어 유지 및 지원 서비스</h4><p style="margin: 0; font-size: 15px">세부품명: 소프트웨어유지및지원서비스</p></article>
+<article style="border: 1px solid #D3DAE6; border-radius: 8px; padding: 20px"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #4A5670">직접생산확인증명서 · 중소기업유통센터</p><h4 style="margin: 4px 0; font-size: 18px">정보인프라 구축 서비스</h4><p style="margin: 0; font-size: 15px">세부품명: 경영정보시스템 정보인프라구축서비스</p></article>
+<article style="border: 1px solid #D3DAE6; border-radius: 8px; padding: 20px"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #4A5670">연구개발전담부서 인정서 · 과기정통부 / KOITA</p><h4 style="margin: 4px 0; font-size: 18px">기업부설연구소 설립</h4><p style="margin: 0; font-size: 15px">기초연구진흥 및 기술개발지원에 관한 법률 제14조 인정</p></article>
+<article style="border: 1px solid #D3DAE6; border-radius: 8px; padding: 20px"><p style="margin: 0; font-size: 14px; font-weight: 600; color: #4A5670">정보통신공사업등록증 · 경기도</p><h4 style="margin: 4px 0; font-size: 18px">정보통신공사업 정식 등록</h4><p style="margin: 0; font-size: 15px">정보통신공사업법 제14조에 의한 등록 업체</p></article>
+</div>
+</div>
+</section>
+
+<footer style="background: #0F1B2D; color: #D2DDEF">
+<div style="max-width: 1280px; margin: 0 auto; padding: 48px 32px; display: flex; flex-wrap: wrap; gap: 24px 64px; justify-content: space-between; font-size: 15px">
+<div>
+<img src="images/logo-dark.svg" alt="에스엠피플스㈜" style="display: block; height: 56px; width: auto">
+<div style="margin-top: 8px; font-weight: 700; color: #FFFFFF">에스엠피플스㈜ <span style="font-weight: 400; color: #D2DDEF">Security Managing Peoples</span></div>
+<p style="margin: 8px 0 0">본사 경기도 고양시 덕양구 청초로 66 덕은리버워크 B동 1619, 1607호<br>지사 대전시 대덕구 대화동 611 가온비즈타워 1124호<br>대표전화 0505-055-1210 · 팩스 0505-65-1210 · 대표이사 최정수 · 사업자등록번호 393-81-01569</p>
+</div>
+<nav aria-label="하단 메뉴" style="display: flex; flex-wrap: wrap; gap: 4px 24px">
+<a href="Solutions.dc.html" style="color: #FFFFFF; padding: 10px 0">솔루션</a>
+<a href="#top" style="color: #FFFFFF; padding: 10px 0">기술지원</a>
+<a href="Main.dc.html#news" style="color: #FFFFFF; padding: 10px 0">보안뉴스</a>
+<a href="#company" style="color: #FFFFFF; padding: 10px 0">회사소개</a>
+</nav>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#1E6FE8","options":["#1E6FE8","#0B2E5E","#0891B2"]},"$preview":{"width":1440,"height":3900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#1E6FE8' };
+  }
+}
+</script>
+</body>
+</html>
