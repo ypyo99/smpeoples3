@@ -1018,6 +1018,82 @@ header.menu-open .mobile-drawer {
     width: 100% !important;
   }
 }
+
+/* ===== 주요 섹션 헤더 배너 (눈에 확 띄는 배경색 및 강조 스타일) ===== */
+.section-header-banner {
+  background: linear-gradient(135deg, #0B2E5E 0%, #154687 50%, #0F1B2D 100%) !important;
+  color: #FFFFFF !important;
+  border-radius: 12px !important;
+  padding: 34px 38px !important;
+  margin-bottom: 34px !important;
+  box-shadow: 0 8px 24px rgba(11, 46, 94, 0.16) !important;
+  border-left: 6px solid #1E6FE8 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  position: relative;
+  overflow: hidden;
+}
+.section-header-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #1E6FE8 0%, #00D2FF 100%);
+  opacity: 0.85;
+}
+.section-header-banner .banner-badge {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #7DD3FC;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.section-header-banner h1,
+.section-header-banner h2 {
+  margin: 0 !important;
+  font-size: clamp(26px, 2.8vw, 36px) !important;
+  line-height: 1.3 !important;
+  font-weight: 700 !important;
+  color: #FFFFFF !important;
+  letter-spacing: -0.015em !important;
+}
+.section-header-banner p {
+  margin: 10px 0 0 !important;
+  font-size: 16px !important;
+  color: #D2DDEF !important;
+  line-height: 1.55 !important;
+}
+.section-header-banner.dark-section-banner {
+  background: linear-gradient(135deg, #182B48 0%, #11223A 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-left: 6px solid #1E6FE8 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+@media (max-width: 768px) {
+  .section-header-banner {
+    padding: 24px 20px !important;
+    margin-bottom: 24px !important;
+    border-radius: 10px !important;
+  }
+  .section-header-banner h1,
+  .section-header-banner h2 {
+    font-size: 22px !important;
+    line-height: 1.35 !important;
+  }
+  .section-header-banner p {
+    font-size: 15px !important;
+    margin-top: 8px !important;
+  }
+  .section-header-banner .banner-badge {
+    font-size: 12px !important;
+    margin-bottom: 6px !important;
+  }
+}
 </style>
 </helmet>
 <div style="background: #F3F6FB; color: #0F1B2D; font-family: 'IBM Plex Sans KR', system-ui, sans-serif; font-size: 16px; line-height: 1.65; word-break: keep-all">
@@ -1151,8 +1227,11 @@ header.menu-open .mobile-drawer {
 
 <section id="solutions" style="background: #FFFFFF; border-top: 1px solid #D3DAE6; border-bottom: 1px solid #D3DAE6">
 <div style="max-width: 1280px; margin: 0 auto; padding: 88px 32px">
-<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.3; font-weight: 700; letter-spacing: -0.015em">보안 사업 영역</h2>
-<p style="margin: 12px 0 0; font-size: 18px; color: #4A5670">바깥 경계부터 사용자 PC까지. 영역을 누르면 해당 솔루션만 표에 나타납니다.</p>
+<div class="section-header-banner">
+  <span class="banner-badge">SECURITY BUSINESS DOMAIN · 사업 영역</span>
+  <h2 style="margin: 0; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.3; font-weight: 700; color: #FFFFFF; letter-spacing: -0.015em">보안 사업 영역</h2>
+  <p style="margin: 10px 0 0; font-size: 17px; color: #D2DDEF; line-height: 1.55">바깥 경계부터 사용자 PC까지. 영역을 누르면 해당 솔루션만 표에 나타납니다.</p>
+</div>
 <div role="group" aria-label="보안 영역 선택" style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px">
 <sc-for list="{{areas}}" as="a" hint-placeholder-count="4">
 <button type="button" onClick="{{a.pick}}" aria-pressed="{{a.selected}}" style="padding: 20px; text-align: left; font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid {{a.bd}}; background: {{a.bg}}; color: {{a.fg}}">
@@ -1220,9 +1299,12 @@ header.menu-open .mobile-drawer {
 <section id="support" style="background: #0F1B2D; color: #FFFFFF">
 <div style="max-width: 1280px; margin: 0 auto; padding: 88px 32px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
 <div style="flex: 1 1 480px; min-width: 0">
-<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.3; font-weight: 700; letter-spacing: -0.015em">도입 상담부터 운영 유지보수까지,<br>가까운 거점에서 지원합니다</h2>
-<p style="margin: 14px 0 0; font-size: 18px; color: #D2DDEF">전문 기술인력이 24/365 장애 예방과 신속한 복구를 지원합니다. 구축 연동과 운영 중 기술지원은 tech@smpeoples.kr로 연락해 주세요.</p>
-<a href="Support.dc.html" class="btn-white-hero" style="display: inline-block; margin-top: 24px; background: #FFFFFF; color: #0F1B2D; font-weight: 600; padding: 12px 24px; border-radius: 6px; text-decoration: none">기술지원 자세히 보기</a>
+<div class="section-header-banner dark-section-banner" style="margin-bottom: 0 !important">
+  <span class="banner-badge">TECHNICAL SUPPORT · 기술지원</span>
+  <h2 style="margin: 0; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.3; font-weight: 700; color: #FFFFFF; letter-spacing: -0.015em">도입 상담부터 운영 유지보수까지,<br>가까운 거점에서 지원합니다</h2>
+  <p style="margin: 12px 0 0; font-size: 16px; color: #D2DDEF; line-height: 1.55">전문 기술인력이 24/365 장애 예방과 신속한 복구를 지원합니다. 구축 연동과 운영 중 기술지원은 tech@smpeoples.kr로 연락해 주세요.</p>
+  <a href="Support.dc.html" class="btn-white-hero" style="display: inline-block; margin-top: 22px; background: #FFFFFF; color: #0F1B2D; font-weight: 600; padding: 12px 24px; border-radius: 6px; text-decoration: none">기술지원 자세히 보기</a>
+</div>
 </div>
 <div style="flex: 1 1 480px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px">
 <div style="border-top: 1px solid #6B7A92; padding-top: 14px"><span style="color: #D2DDEF; font-size: 14px; font-weight: 500">수도권 거점</span><h3 style="margin: 4px 0 6px; font-size: 20px">고양 본사</h3><p style="margin: 0; color: #D2DDEF">경기도 고양시 덕양구 청초로 66 덕은리버워크 B동 1619, 1607호</p></div>
@@ -1233,8 +1315,11 @@ header.menu-open .mobile-drawer {
 
 <section id="cases" style="background: #FFFFFF; border-bottom: 1px solid #D3DAE6">
 <div style="max-width: 1280px; margin: 0 auto; padding: 88px 32px">
-<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.3; font-weight: 700; letter-spacing: -0.015em">국내외 현장에서 검증된 사업 실적</h2>
-<p style="margin: 12px 0 0; font-size: 18px; color: #4A5670; max-width: 44em">정부 ODA 사업과 글로벌 기업의 해외 거점부터 국내 공공·국방·기업의 인프라까지 구축하고 운영합니다.</p>
+<div class="section-header-banner">
+  <span class="banner-badge">BUSINESS PERFORMANCE · 사업 실적</span>
+  <h2 style="margin: 0; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.3; font-weight: 700; color: #FFFFFF; letter-spacing: -0.015em">국내외 현장에서 검증된 사업 실적</h2>
+  <p style="margin: 10px 0 0; font-size: 17px; color: #D2DDEF; line-height: 1.55; max-width: 48em">정부 ODA 사업과 글로벌 기업의 해외 거점부터 국내 공공·국방·기업의 인프라까지 구축하고 운영합니다.</p>
+</div>
 <h3 style="margin: 40px 0 0; font-size: 22px; font-weight: 700">글로벌 해외사업</h3>
 <div style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px">
 <sc-for list="{{globalProjects}}" as="g" hint-placeholder-count="8">
@@ -1255,8 +1340,11 @@ header.menu-open .mobile-drawer {
 </section>
 
 <section id="news" style="max-width: 1280px; margin: 0 auto; padding: 88px 32px">
-<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.3; font-weight: 700; letter-spacing: -0.015em">보안뉴스 및 보안 권고</h2>
-<p style="margin: 12px 0 0; font-size: 18px; color: #4A5670">KISA 보안 권고문과 주요 사이버 보안 위협 소식을 안내합니다.</p>
+<div class="section-header-banner">
+  <span class="banner-badge">SECURITY NEWS &amp; ADVISORY · 보안뉴스</span>
+  <h2 style="margin: 0; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.3; font-weight: 700; color: #FFFFFF; letter-spacing: -0.015em">보안뉴스 및 보안 권고</h2>
+  <p style="margin: 10px 0 0; font-size: 17px; color: #D2DDEF; line-height: 1.55">KISA 보안 권고문과 주요 사이버 보안 위협 소식을 안내합니다.</p>
+</div>
 <div style="margin-top: 28px; border-top: 2px solid #0F1B2D">
 <sc-for list="{{news}}" as="n" hint-placeholder-count="5">
 <a href="{{n.url}}" style="display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 18px 0; border-bottom: 1px solid #D3DAE6; color: #0F1B2D; text-decoration: none; align-items: baseline">
