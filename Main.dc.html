@@ -1026,13 +1026,11 @@ header.menu-open .mobile-drawer {
     margin-top: 4px !important;
   }
 
-  /* 도입/기술 문의 폼 */
-  #contact div[style*="padding: 88px 32px"] {
-    gap: 36px !important;
+  /* 도입/기술 문의 */
+  #contact .contact-grid {
+    gap: 32px !important;
   }
-  #contact div[style*="flex: 1 1 400px"] {
-    flex: 1 1 100% !important;
-  }
+  #contact .contact-info,
   #contact form {
     flex: 1 1 100% !important;
   }
@@ -1461,24 +1459,35 @@ header.menu-open .mobile-drawer {
 </section>
 
 <section id="contact" style="background: #FFFFFF; border-top: 1px solid #D3DAE6">
-<div style="max-width: 1280px; margin: 0 auto; padding: 88px 32px; display: flex; flex-wrap: wrap; gap: 56px">
-<div style="flex: 1 1 400px; min-width: 0">
-<h2 style="margin: 0; font-size: clamp(28px, 3vw, 38px); line-height: 1.3; font-weight: 700; letter-spacing: -0.015em">도입 · 기술 문의</h2>
-<p style="margin: 14px 0 0; font-size: 18px; color: #4A5670">솔루션 도입 상담과 견적 요청부터 구축·유지보수 기술지원까지 전문 인력이 신속히 안내해 드립니다.</p>
-<div style="margin-top: 28px; display: grid; gap: 12px">
-<div style="background: #F3F6FB; border-radius: 8px; padding: 20px">
-<strong>대표전화</strong> <span style="color: #4A5670">팩스 0505-65-1210</span>
-<a href="tel:05050551210" style="display: block; margin-top: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500">0505-055-1210</a>
+<div style="max-width: 1280px; margin: 0 auto; padding: 88px 32px">
+<div class="section-header-banner" style="margin-bottom: 36px">
+  <span class="banner-badge">CONTACT &amp; INQUIRY · 도입 및 기술 문의</span>
+  <h2 style="margin: 0; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.3; font-weight: 700; color: #FFFFFF; letter-spacing: -0.015em">도입 · 기술 문의</h2>
+  <p style="margin: 10px 0 0; font-size: 17px; color: #D2DDEF; line-height: 1.55; max-width: 48em">솔루션 도입 상담과 견적 요청부터 구축·유지보수 기술지원까지 전문 인력이 신속히 안내해 드립니다.</p>
 </div>
-<div style="background: #F3F6FB; border-radius: 8px; padding: 20px">
-<strong>영업문의</strong> <span style="color: #4A5670">솔루션 도입 · 견적 · 제안 요청</span>
-<a href="mailto:sales@smpeoples.kr" style="display: block; margin-top: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500">sales@smpeoples.kr</a>
-</div>
-<div style="background: #F3F6FB; border-radius: 8px; padding: 20px">
-<strong>기술문의</strong> <span style="color: #4A5670">구축 · 연동 · 기술지원</span>
-<a href="mailto:tech@smpeoples.kr" style="display: block; margin-top: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500">tech@smpeoples.kr</a>
-</div>
-</div>
+<div class="contact-grid" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+<div class="contact-info" style="flex: 1 1 380px; min-width: 0; display: grid; gap: 14px">
+  <div style="background: #F3F6FB; border: 1px solid #D3DAE6; border-radius: 8px; padding: 22px 24px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline">
+      <strong style="color: #0F1B2D; font-size: 16px">대표전화</strong>
+      <span style="color: #4A5670; font-size: 14px">팩스 0505-65-1210</span>
+    </div>
+    <a href="tel:05050551210" style="display: block; margin-top: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: #1E6FE8; text-decoration: none">0505-055-1210</a>
+  </div>
+  <div style="background: #F3F6FB; border: 1px solid #D3DAE6; border-radius: 8px; padding: 22px 24px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline">
+      <strong style="color: #0F1B2D; font-size: 16px">영업문의</strong>
+      <span style="color: #4A5670; font-size: 14px">솔루션 도입 · 견적 · 제안 요청</span>
+    </div>
+    <a href="mailto:sales@smpeoples.kr" style="display: block; margin-top: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; color: #1E6FE8; text-decoration: none">sales@smpeoples.kr</a>
+  </div>
+  <div style="background: #F3F6FB; border: 1px solid #D3DAE6; border-radius: 8px; padding: 22px 24px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline">
+      <strong style="color: #0F1B2D; font-size: 16px">기술문의</strong>
+      <span style="color: #4A5670; font-size: 14px">구축 · 연동 · 기술지원</span>
+    </div>
+    <a href="mailto:tech@smpeoples.kr" style="display: block; margin-top: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; color: #1E6FE8; text-decoration: none">tech@smpeoples.kr</a>
+  </div>
 </div>
 <form style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
 <h3 style="margin: 0; font-size: 22px; font-weight: 700">맞춤 문의 메일 작성</h3>
@@ -1502,6 +1511,7 @@ header.menu-open .mobile-drawer {
 <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 500">문의 내용 (선택)<textarea rows="4" value="{{message}}" onChange="{{setMessage}}" style="padding: 10px 12px; font: inherit; border: 1px solid #6B7A92; border-radius: 6px; resize: vertical"></textarea></label>
 <a href="{{mailto}}" class="btn-cta" style="display: block; text-align: center; padding: 14px 20px; font-weight: 600; border-radius: 6px; background: {{accent}}; color: #FFFFFF; text-decoration: none">이메일 작성 창 열기 →</a>
 </form>
+</div>
 </div>
 </section>
 
