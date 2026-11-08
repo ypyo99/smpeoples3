@@ -40,33 +40,33 @@
     }
   }
 
-  function smoothScrollTo(target) {
-    if (!target) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+  function jumpToSection(target) {
+    var targetY = 0;
+    if (target) {
+      var header = document.querySelector('header');
+      var headerOffset = header ? header.offsetHeight + 12 : 80;
+      var rect = target.getBoundingClientRect();
+      targetY = Math.max(0, window.pageYOffset + rect.top - headerOffset);
     }
-    var header = document.querySelector('header');
-    var headerOffset = header ? header.offsetHeight + 12 : 80;
-    var rect = target.getBoundingClientRect();
-    var targetY = window.pageYOffset + rect.top - headerOffset;
-    window.scrollTo({
-      top: Math.max(0, targetY),
-      behavior: 'smooth'
-    });
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.documentElement.scrollTop = targetY;
+    document.body.scrollTop = targetY;
+    window.scrollTo(0, targetY);
+    setTimeout(function() {
+      document.documentElement.style.scrollBehavior = '';
+    }, 50);
   }
 
   function handleHashScroll() {
     if (isReload) return false;
     if (window.location.hash) {
       if (window.location.hash === '#top') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        jumpToSection(null);
         return true;
       }
       var target = getTarget(window.location.hash);
       if (target) {
-        setTimeout(function() {
-          smoothScrollTo(target);
-        }, 60);
+        jumpToSection(target);
         return true;
       }
     }
@@ -175,13 +175,13 @@
       isReload = false;
       if (url.hash === '#top') {
         history.replaceState(null, '', window.location.pathname + window.location.search);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        jumpToSection(null);
         return;
       }
       var target = getTarget(url.hash);
       if (target) {
         history.replaceState(null, '', url.hash);
-        smoothScrollTo(target);
+        jumpToSection(target);
       }
     }
   });
@@ -222,7 +222,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
 <style>
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 body {
   margin: 0;
@@ -866,6 +866,49 @@ header.menu-open .mobile-drawer {
     font-size: 12px !important;
     margin-bottom: 6px !important;
   }
+}
+
+/* ===== 상단 네비게이션 메뉴 버튼 (마우스 호버 시 배경색 및 인터랙션) ===== */
+.desktop-nav {
+  gap: 4px 10px !important;
+}
+.desktop-nav a {
+  padding: 8px 15px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  color: #0F1B2D !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
+  background: transparent !important;
+}
+.desktop-nav a:hover {
+  background: linear-gradient(135deg, #EEF4FC 0%, #E2EDFB 100%) !important;
+  color: #1E6FE8 !important;
+  box-shadow: 0 2px 10px rgba(30, 111, 232, 0.18) !important;
+  transform: translateY(-1px) !important;
+}
+.desktop-nav a:active {
+  background: #D5E5FA !important;
+  color: #0B2E5E !important;
+  transform: translateY(0) scale(0.97) !important;
+  box-shadow: 0 1px 4px rgba(30, 111, 232, 0.2) !important;
+}
+.desktop-nav a[aria-current="page"] {
+  background: rgba(30, 111, 232, 0.08) !important;
+  color: #1E6FE8 !important;
+  font-weight: 700 !important;
+}
+.desktop-nav a[aria-current="page"]:hover {
+  background: linear-gradient(135deg, #E2EDFB 0%, #D5E5FA 100%) !important;
+  color: #1E6FE8 !important;
+}
+.mobile-nav-item:hover,
+.mobile-nav-item:active {
+  background: linear-gradient(135deg, #EEF4FC 0%, #E2EDFB 100%) !important;
+  color: #1E6FE8 !important;
 }
 </style>
 </helmet>
