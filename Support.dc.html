@@ -118,11 +118,17 @@
   }
 
   document.addEventListener('click', function(e) {
-    // 1. 맨 위로 가기 버튼 클릭
+    // 1. 맨 위로 가기 버튼 클릭 (스크롤 애니메이션 없이 즉시 화면 최상단 표시)
     var topBtn = e.target.closest('.btn-back-to-top');
     if (topBtn) {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.documentElement.style.scrollBehavior = 'auto';
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo(0, 0);
+      setTimeout(function() {
+        document.documentElement.style.scrollBehavior = '';
+      }, 50);
       return;
     }
 
