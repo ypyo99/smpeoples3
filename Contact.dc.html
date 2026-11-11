@@ -1363,7 +1363,7 @@ class Component extends DCLogic {
     }));
     const to = this.state.kind === 'sales' ? 'sales@smpeoples.kr' : 'tech@smpeoples.kr';
     const subject = (this.state.kind === 'sales' ? '[영업문의] ' : '[기술문의] ') + (chosen.length ? chosen.join(', ') : '보안 솔루션 문의');
-    const body = '고객사/담당자: ' + this.state.who + '\\n관심 솔루션: ' + chosen.join(', ') + '\\n\\n문의 내용:\\n' + this.state.message;
+    const body = '고객사/담당자: ' + this.state.who + '\n관심 솔루션: ' + chosen.join(', ') + '\n\n문의 내용:\n' + this.state.message;
     const mailto = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
     return {
