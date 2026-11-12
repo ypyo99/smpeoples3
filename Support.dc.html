@@ -622,40 +622,56 @@ header.menu-open .mobile-drawer {
     overflow-x: hidden;
   }
 
-  /* 모든 섹션 및 컨테이너의 모바일 좌우 여백을 10px로 슬림화하여 화면 가로폭을 최대한 넓게 사용 */
+    /* 모바일 적절한 좌우 여백 (표준 20px 패딩 시스템) */
   div[style*="max-width: 1280px"],
   section[style*="max-width: 1280px"],
-  section[style*="padding:"],
-  div[style*="padding: 88px 32px"],
-  div[style*="padding: 72px 32px"],
-  div[style*="padding: 48px 32px"],
-  div[style*="padding: 28px 32px"],
-  section#company,
-  section#news,
   .news-section-wrap {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     width: 100% !important;
     box-sizing: border-box !important;
   }
-  section div[style*="padding: 72px 32px"],
-  section div[style*="padding: 88px 32px"] {
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-    gap: 24px !important;
-  }
-  section div[style*="max-width: 1280px"] {
+
+  /* 전체 배경색이 있는 섹션의 경우 외부 section 여백은 0, 내부 컨테이너 div에 20px 적용 */
+  section:has(> div[style*="max-width: 1280px"]) {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+  section:has(> div[style*="max-width: 1280px"]) > div[style*="max-width: 1280px"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
 
-  /* 상단 섹션 배너 및 카드 좌우폭 확장 */
+  /* 명시적 섹션 ID 폴백 */
+  section#solutions,
+  section#support,
+  section#cases,
+  section#contact {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  section#solutions > div,
+  section#support > div,
+  section#cases > div,
+  section#contact > div {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  section div[style*="padding: 72px 32px"],
+  section div[style*="padding: 88px 32px"] {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    gap: 24px !important;
+  }
+
+  /* 상단 섹션 배너 및 카드 좌우 여백 */
   .section-header-banner {
-    padding: 20px 14px !important;
-    margin-bottom: 20px !important;
-    border-radius: 8px !important;
+    padding: 24px 20px !important;
+    margin-bottom: 24px !important;
+    border-radius: 10px !important;
     width: 100% !important;
     box-sizing: border-box !important;
   }
@@ -663,18 +679,27 @@ header.menu-open .mobile-drawer {
   article,
   .news-article-card,
   ol[style*="grid-template-columns"] > li,
-  div[style*="background: #FFFFFF; border: 1px solid #D3DAE6; border-radius: 8px"] {
-    padding-left: 14px !important;
-    padding-right: 14px !important;
+  div[style*="background: #FFFFFF; border: 1px solid #D3DAE6; border-radius: 8px"],
+  div[style*="background: #FFFFFF; border: 1px solid #D3DAE6; border-radius: 10px"] {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
     width: 100% !important;
     box-sizing: border-box !important;
   }
 
   /* 하단 CTA 배너 박스 */
   div[style*="background: #0B2E5E"] {
-    padding: 24px 14px !important;
-    border-radius: 8px !important;
+    padding: 28px 20px !important;
+    border-radius: 10px !important;
     box-sizing: border-box !important;
+  }
+
+  /* 푸터 좌우 여백 (20px) */
+  footer div[style*="max-width: 1280px"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
   }
 
 
@@ -705,7 +730,7 @@ header.menu-open .mobile-drawer {
     display: none !important;
   }
   .header-inner {
-    padding: 10px 16px !important;
+    padding: 12px 20px !important;
   }
   .header-inner a[href="Main.dc.html"] img {
     height: 38px !important;
