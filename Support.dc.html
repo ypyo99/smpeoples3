@@ -944,6 +944,98 @@ header.menu-open .mobile-drawer {
   margin-top: 3px;
   color: #1E6FE8;
 }
+
+/* ===== 기술지원 문의 채널 카드 (컴팩트 & 균형잡힌 행간) ===== */
+.support-channel-card {
+  background: #FFFFFF;
+  border: 1px solid #D3DAE6;
+  border-radius: 10px;
+  padding: 18px 22px;
+  box-shadow: 0 2px 8px rgba(15, 27, 45, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.support-channel-card:hover {
+  transform: translateY(-2px);
+  border-color: #1E6FE8;
+  box-shadow: 0 8px 22px rgba(30, 111, 232, 0.1);
+}
+.channel-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+.channel-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.channel-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F1B2D;
+  line-height: 1.25;
+}
+.channel-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1E6FE8;
+  background: #EEF4FC;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.channel-sub {
+  font-size: 12.5px;
+  color: #64748B;
+  white-space: nowrap;
+}
+.channel-desc {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  color: #4A5670;
+  line-height: 1.4;
+}
+.channel-link {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 21px;
+  font-weight: 700;
+  color: #0B2E5E;
+  text-decoration: none;
+  line-height: 1.2;
+  margin-top: auto;
+  transition: color 0.15s ease;
+}
+.channel-link:hover {
+  color: #1E6FE8;
+}
+.channel-link.email {
+  font-size: 18.5px;
+  color: #1E6FE8;
+}
+.channel-link.email:hover {
+  color: #0B2E5E;
+}
+@media (max-width: 768px) {
+  .support-channel-card {
+    padding: 15px 16px;
+  }
+  .channel-title {
+    font-size: 17px;
+  }
+  .channel-link {
+    font-size: 19.5px;
+  }
+  .channel-link.email {
+    font-size: 17px;
+  }
+}
 </style>
 </helmet>
 <div style="background: #F3F6FB; color: #0F1B2D; font-family: 'IBM Plex Sans KR', system-ui, sans-serif; font-size: 16px; line-height: 1.65; word-break: keep-all">
@@ -1001,35 +1093,44 @@ header.menu-open .mobile-drawer {
   </div>
 
   <!-- 기술지원 채널 3열 카드 -->
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 48px">
-    <div style="background: #FFFFFF; border: 1px solid #D3DAE6; border-radius: 8px; padding: 24px 28px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 8px rgba(15, 27, 45, 0.04)">
-      <div style="display: flex; justify-content: space-between; align-items: center">
-        <span style="font-size: 13px; font-weight: 600; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 4px">신속 유선 상담</span>
-        <span style="font-size: 13px; color: #4A5670">팩스 0505-65-1210</span>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 44px">
+    <!-- 01. 대표전화 -->
+    <div class="support-channel-card">
+      <div class="channel-card-header">
+        <div class="channel-title-group">
+          <h3 class="channel-title">대표전화</h3>
+          <span class="channel-badge">신속 유선 상담</span>
+        </div>
+        <span class="channel-sub">팩스 0505-65-1210</span>
       </div>
-      <h3 style="margin: 6px 0 0; font-size: 20px; font-weight: 700; color: #0F1B2D">대표전화</h3>
-      <p style="margin: 0; font-size: 14px; color: #4A5670">평일 09:00 ~ 18:00 (24/365 긴급 장애 대응)</p>
-      <a href="tel:05050551210" style="display: inline-block; margin-top: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 24px; font-weight: 600; color: #0B2E5E; text-decoration: none">0505-055-1210</a>
+      <p class="channel-desc">평일 09:00 ~ 18:00 (24/365 긴급 장애 대응)</p>
+      <a href="tel:05050551210" class="channel-link">0505-055-1210</a>
     </div>
 
-    <div style="background: #FFFFFF; border: 1px solid #D3DAE6; border-radius: 8px; padding: 24px 28px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 8px rgba(15, 27, 45, 0.04)">
-      <div style="display: flex; justify-content: space-between; align-items: center">
-        <span style="font-size: 13px; font-weight: 600; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 4px">엔지니어 대응</span>
-        <span style="font-size: 13px; color: #4A5670">구축 · 연동 · 기술지원</span>
+    <!-- 02. 기술문의 -->
+    <div class="support-channel-card">
+      <div class="channel-card-header">
+        <div class="channel-title-group">
+          <h3 class="channel-title">기술문의</h3>
+          <span class="channel-badge">엔지니어 대응</span>
+        </div>
+        <span class="channel-sub">구축 · 연동 · 기술지원</span>
       </div>
-      <h3 style="margin: 6px 0 0; font-size: 20px; font-weight: 700; color: #0F1B2D">기술문의</h3>
-      <p style="margin: 0; font-size: 14px; color: #4A5670">전문 엔지니어 1:1 기술 분석 및 장애 접수</p>
-      <a href="mailto:tech@smpeoples.kr" style="display: inline-block; margin-top: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: #1E6FE8; text-decoration: none">tech@smpeoples.kr</a>
+      <p class="channel-desc">전문 엔지니어 1:1 기술 분석 및 장애 접수</p>
+      <a href="mailto:tech@smpeoples.kr" class="channel-link email">tech@smpeoples.kr</a>
     </div>
 
-    <div style="background: #FFFFFF; border: 1px solid #D3DAE6; border-radius: 8px; padding: 24px 28px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 8px rgba(15, 27, 45, 0.04)">
-      <div style="display: flex; justify-content: space-between; align-items: center">
-        <span style="font-size: 13px; font-weight: 600; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 4px">도입 견적 제안</span>
-        <span style="font-size: 13px; color: #4A5670">솔루션 도입 · 견적</span>
+    <!-- 03. 영업문의 -->
+    <div class="support-channel-card">
+      <div class="channel-card-header">
+        <div class="channel-title-group">
+          <h3 class="channel-title">영업문의</h3>
+          <span class="channel-badge">도입 견적 제안</span>
+        </div>
+        <span class="channel-sub">솔루션 도입 · 견적</span>
       </div>
-      <h3 style="margin: 6px 0 0; font-size: 20px; font-weight: 700; color: #0F1B2D">영업문의</h3>
-      <p style="margin: 0; font-size: 14px; color: #4A5670">보안 솔루션 도입 문의 및 제안서/견적 요청</p>
-      <a href="mailto:sales@smpeoples.kr" style="display: inline-block; margin-top: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: #1E6FE8; text-decoration: none">sales@smpeoples.kr</a>
+      <p class="channel-desc">보안 솔루션 도입 문의 및 제안서/견적 요청</p>
+      <a href="mailto:sales@smpeoples.kr" class="channel-link email">sales@smpeoples.kr</a>
     </div>
   </div>
 
