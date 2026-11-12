@@ -853,6 +853,86 @@ header.menu-open .mobile-drawer {
   transform: translateY(0) scale(0.93) !important;
 }
 
+/* ===== 회사 현황 지표 카드 (Company Stats Cards) ===== */
+.stats-section {
+  background: #FFFFFF;
+  border-bottom: 1px solid #D3DAE6;
+  padding: 32px 24px;
+}
+.stats-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.stat-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 20px 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.22s ease;
+  box-shadow: 0 2px 6px rgba(15, 27, 45, 0.02);
+}
+.stat-card:hover {
+  background: #FFFFFF;
+  border-color: #1E6FE8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(30, 111, 232, 0.1);
+}
+.stat-card .stat-number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 30px;
+  font-weight: 700;
+  color: #0B2E5E;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.stat-card .stat-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0F1B2D;
+  line-height: 1.35;
+}
+.stat-card .stat-sub {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 400;
+  margin-top: 3px;
+}
+
+@media (max-width: 992px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .stat-card.stat-card-last {
+    grid-column: span 2 !important;
+  }
+}
+@media (max-width: 768px) {
+  .stats-section {
+    padding: 20px 14px !important;
+  }
+  .stat-card {
+    padding: 16px 12px !important;
+  }
+  .stat-card .stat-number {
+    font-size: 26px !important;
+  }
+  .stat-card .stat-label {
+    font-size: 14px !important;
+  }
+  .stat-card .stat-sub {
+    font-size: 12px !important;
+  }
+}
+
 @media (max-width: 768px) {
   /* 스마트폰 화면 좌우폭 최대화 (Edge-to-Edge 와이드 뷰) */
   html, body {
@@ -968,17 +1048,6 @@ header.menu-open .mobile-drawer {
   }
   div[style*="repeat(auto-fit, minmax(190px, 1fr))"] {
     grid-template-columns: 1fr !important;
-  }
-
-  /* 회사 현황 지표 (2열 그리드) */
-  section[aria-label="회사 현황"] div[style*="max-width: 1280px"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 20px 16px !important;
-    padding-top: 24px !important;
-    padding-bottom: 24px !important;
-  }
-  section[aria-label="회사 현황"] div[style*="max-width: 1280px"] > div:last-child {
-    grid-column: span 2;
   }
 
   /* STEP 01~03 프로세스 카드 (1열) */
@@ -1316,13 +1385,33 @@ header.menu-open .mobile-drawer {
 </section>
 
 <!-- 회사 현황 5개 지표 (1.5초 이징 카운팅 애니메이션) -->
-<section aria-label="회사 현황" style="background: #FFFFFF; border-bottom: 1px solid #D3DAE6">
-<div style="max-width: 1280px; margin: 0 auto; padding: 28px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px 32px">
-  <div><div data-stat="clients" style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500; color: #0B2E5E">{{countClients}}</div><div style="font-weight: 500">유지보수 고객사<br><span style="color: #4A5670; font-weight: 400">공공·금융·국방·민간</span></div></div>
-  <div><div data-stat="engineers" style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500; color: #0B2E5E">{{countEngineers}}</div><div style="font-weight: 500">전체 임직원 대비<br><span style="color: #4A5670; font-weight: 400">전문 엔지니어 비율</span></div></div>
-  <div><div data-stat="support" style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500; color: #0B2E5E">{{countSupport}}</div><div style="font-weight: 500">유지보수 기술지원<br><span style="color: #4A5670; font-weight: 400">고양 본사 · 대전 지사</span></div></div>
-  <div><div data-stat="vendors" style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500; color: #0B2E5E">{{countVendors}}</div><div style="font-weight: 500">파트너 벤더<br><span style="color: #4A5670; font-weight: 400">국내외 보안·네트워크</span></div></div>
-  <div><div data-stat="countries" style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500; color: #0B2E5E">{{countCountries}}</div><div style="font-weight: 500">글로벌 사업 수행<br><span style="color: #4A5670; font-weight: 400">KOICA · EDCF</span></div></div>
+<section aria-label="회사 현황" class="stats-section">
+<div class="stats-grid">
+  <div class="stat-card">
+    <div data-stat="clients" class="stat-number">{{countClients}}</div>
+    <div class="stat-label">유지보수 고객사</div>
+    <div class="stat-sub">공공·금융·국방·민간</div>
+  </div>
+  <div class="stat-card">
+    <div data-stat="engineers" class="stat-number">{{countEngineers}}</div>
+    <div class="stat-label">전체 임직원 대비</div>
+    <div class="stat-sub">전문 엔지니어 비율</div>
+  </div>
+  <div class="stat-card">
+    <div data-stat="support" class="stat-number">{{countSupport}}</div>
+    <div class="stat-label">유지보수 기술지원</div>
+    <div class="stat-sub">고양 본사 · 대전 지사</div>
+  </div>
+  <div class="stat-card">
+    <div data-stat="vendors" class="stat-number">{{countVendors}}</div>
+    <div class="stat-label">파트너 벤더</div>
+    <div class="stat-sub">국내외 보안·네트워크</div>
+  </div>
+  <div class="stat-card stat-card-last">
+    <div data-stat="countries" class="stat-number">{{countCountries}}</div>
+    <div class="stat-label">글로벌 사업 수행</div>
+    <div class="stat-sub">KOICA · EDCF</div>
+  </div>
 </div>
 </section>
 
