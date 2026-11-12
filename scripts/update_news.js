@@ -1,13 +1,13 @@
 /**
- * KISA 보호나라(KrCERT/CC) 보안공지 최신 5건 자동 수집 스크립트
+ * KISA 보호나라(KrCERT/CC) 보안공지 최신 20건 자동 수집 스크립트
  * 에스엠피플스(SM Peoples) 보안뉴스 섹션 자동 갱신용
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const LIST_URL = 'https://www.boho.or.kr/kr/bbs/list.do?menuNo=205020&bbsId=B0000133';
 const OUTPUT_PATH = path.resolve(__dirname, '../data/news.json');
+const TARGET_COUNT = 20;
 
 async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
   const controller = new AbortController();
@@ -69,42 +69,54 @@ function determineTag(title) {
 }
 
 async function main() {
-  console.log(`[${new Date().toISOString()}] KISA 보안공지 수집 시작...`);
-  const res = await fetchWithTimeout(LIST_URL);
-  if (!res.ok) {
-    throw new Error(`KISA list fetch failed with status ${res.status}`);
-  }
+  console.log(`[${new Date().toISOString()}] KISA 보안공지 최신 ${TARGET_COUNT}건 수집 시작...`);
 
-  const html = await res.text();
-
-  // KISA 공지 테이블 행 파싱
-  const rowRegex = /<td class="num">([^<]*)<\/td>[\s\S]*?<a href="([^"]*nttId=(\d+)[^"]*)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?<td class="date">([^<]*)<\/td>/g;
   const rawItems = [];
-  let m;
+  const seenNttIds = new Set();
 
-  while ((m = rowRegex.exec(html)) !== null) {
-    const isPinned = m[1].includes('공지');
-    const relUrl = m[2].replace(/&amp;/g, '&');
-    const nttId = m[3];
-    const title = m[4].replace(/<[^>]+>/g, '').trim();
-    const date = m[5].trim();
+  // KISA 게시판은 페이지당 일반 글 10건 제공하므로 다중 페이지 순회
+  for (let page = 1; page <= 4; page++) {
+    const listUrl = `https://www.boho.or.kr/kr/bbs/list.do?menuNo=205020&bbsId=B0000133&pageIndex=${page}`;
+    const res = await fetchWithTimeout(listUrl);
+    if (!res.ok) {
+      console.warn(`KISA list fetch page ${page} failed: ${res.status}`);
+      break;
+    }
 
-    rawItems.push({
-      isPinned,
-      nttId,
-      title,
-      date,
-      url: 'https://www.boho.or.kr' + (relUrl.startsWith('/') ? relUrl : '/' + relUrl)
-    });
+    const html = await res.text();
+    const rowRegex = /<td class="num">([^<]*)<\/td>[\s\S]*?<a href="([^"]*nttId=(\d+)[^"]*)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?<td class="date">([^<]*)<\/td>/g;
+    let m;
+
+    while ((m = rowRegex.exec(html)) !== null) {
+      const isPinned = m[1].includes('공지');
+      const relUrl = m[2].replace(/&amp;/g, '&');
+      const nttId = m[3];
+      const title = m[4].replace(/<[^>]+>/g, '').trim();
+      const date = m[5].trim();
+
+      if (!seenNttIds.has(nttId)) {
+        seenNttIds.add(nttId);
+        rawItems.push({
+          isPinned,
+          nttId,
+          title,
+          date,
+          url: 'https://www.boho.or.kr' + (relUrl.startsWith('/') ? relUrl : '/' + relUrl)
+        });
+      }
+    }
+
+    const regularCount = rawItems.filter(it => !it.isPinned).length;
+    if (regularCount >= TARGET_COUNT) break;
   }
 
   if (rawItems.length === 0) {
     throw new Error('KISA 게시판에서 항목을 찾을 수 없습니다.');
   }
 
-  // 상단 고정(공지) 제외 최신 게시글 10건 우선 선별 (부족 시 고정 포함)
+  // 상단 고정(공지) 제외 최신 게시글 TARGET_COUNT건 우선 선별 (부족 시 고정 포함)
   const regularItems = rawItems.filter(it => !it.isPinned);
-  const selected = (regularItems.length >= 10 ? regularItems : rawItems).slice(0, 10);
+  const selected = (regularItems.length >= TARGET_COUNT ? regularItems : rawItems).slice(0, TARGET_COUNT);
 
   const newsList = [];
 

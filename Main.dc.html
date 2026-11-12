@@ -1448,7 +1448,7 @@ header.menu-open .mobile-drawer {
   <p style="margin: 10px 0 0; font-size: 17px; color: #D2DDEF; line-height: 1.55">KISA 보안 권고문과 주요 사이버 보안 위협 소식을 안내합니다.</p>
 </div>
 <div style="margin-top: 28px; border-top: 2px solid #0F1B2D">
-<sc-for list="{{news}}" as="n" hint-placeholder-count="10">
+<sc-for list="{{news}}" as="n" hint-placeholder-count="20">
 <a href="{{n.url}}" style="display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 18px 0; border-bottom: 1px solid #D3DAE6; color: #0F1B2D; text-decoration: none; align-items: baseline">
 <span style="flex: 0 0 130px; font-size: 14px; font-weight: 600; color: #4A5670">{{n.tag}}</span>
 <span style="flex: 1 1 520px; min-width: 0"><strong style="display: block; font-size: 18px; font-weight: 700">{{n.title}}</strong><span style="display: block; color: #4A5670">{{n.desc}}</span></span>
@@ -1861,6 +1861,86 @@ class Component extends DCLogic {
             "source": "KISA 보호나라",
             "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72295",
             "date": "2026-11-10"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "IBM 제품 보안 업데이트 권고",
+            "desc": "IBM사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72294",
+            "date": "2026-11-10"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "WordPress 플러그인 보안 업데이트 권고",
+            "desc": "WordPress의 Contact Form 7 플러그인 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72293",
+            "date": "2026-11-10"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "SonicWall 제품 보안 업데이트 권고",
+            "desc": "SonicWall사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72292",
+            "date": "2026-11-10"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "OWASP 제품 보안 업데이트 권고",
+            "desc": "OWASP 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72291",
+            "date": "2026-11-10"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "SonicWall 제품 보안 업데이트 권고",
+            "desc": "SonicWall사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72290",
+            "date": "2026-11-09"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "인피니트헬스케어 제품 보안 업데이트 권고",
+            "desc": "인피니트헬스케어사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72289",
+            "date": "2026-11-07"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "OpenSSH 보안 업데이트 권고",
+            "desc": "Alpine Linux는 OpenSSH에서 발생하는 인증 우회 취약점을 해결한 보안 업데이트 발표 영향받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 신속히 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72288",
+            "date": "2026-11-07"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "enspirit 제품 보안 업데이트 권고",
+            "desc": "enspirit사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72287",
+            "date": "2026-11-06"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "Apache 제품 보안 업데이트 권고",
+            "desc": "Apache 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72286",
+            "date": "2026-11-06"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "엠투소프트 제품 보안 업데이트 권고",
+            "desc": "엠투소프트사는 자사 제품의 취약점을 해결한 보안 업데이트를 발표함 낮은 버전을 사용 중인 사용자는 제조사의 해결 방안 안내에 따라 조치를 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=2&categoryCode=&nttId=72285",
+            "date": "2026-11-06"
       }
 ];
     const news = (this.state && Array.isArray(this.state.news) && this.state.news.length > 0)
