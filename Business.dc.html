@@ -1272,6 +1272,67 @@ header.menu-open .mobile-drawer {
     padding-bottom: 18px !important;
   }
 }
+
+/* ===== 핵심 역량 카드 (WHY SM PEOPLES) ===== */
+.competency-card {
+  background: #FFFFFF;
+  border: 1px solid #D3DAE6;
+  border-radius: 12px;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(15, 27, 45, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+.competency-card:hover {
+  transform: translateY(-4px);
+  border-color: #1E6FE8;
+  box-shadow: 0 12px 28px rgba(30, 111, 232, 0.12);
+}
+.competency-card .card-top-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1E6FE8 0%, #00D2FF 100%);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+.competency-card:hover .card-top-accent {
+  opacity: 1;
+}
+.competency-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #EEF2F6;
+  padding-top: 16px;
+  flex-grow: 1;
+}
+.competency-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #334155;
+  line-height: 1.45;
+}
+.competency-checklist svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: #1E6FE8;
+}
+@media (max-width: 768px) {
+  .competency-card {
+    padding: 20px 18px !important;
+  }
+}
 </style>
 </helmet>
 
@@ -1363,22 +1424,114 @@ header.menu-open .mobile-drawer {
 </div>
 </section>
 
-<section style="max-width: 1280px; margin: 0 auto; padding: 88px 32px">
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px">
-    <div style="border-top: 2px solid #0F1B2D; padding-top: 20px">
-      <span style="font-family: 'IBM Plex Mono', monospace; color: {{accent}}; font-weight: 500">01</span>
-      <h3 style="margin: 8px 0 10px; font-size: 21px; font-weight: 700">정보보안 전문가 그룹</h3>
-      <p style="margin: 0; color: #4A5670; line-height: 1.6">전체 임직원의 87%가 전문 엔지니어 및 보안 컨설팅 인력으로 구성되어 체계적인 기술 서비스를 제공합니다.</p>
+<section style="max-width: 1280px; margin: 0 auto; padding: 72px 32px">
+  <div style="margin-bottom: 32px">
+    <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 8px">
+      <span style="font-size: 13px; font-weight: 700; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em">WHY SM PEOPLES</span>
+      <span style="font-size: 13px; color: #64748B; font-weight: 500">에스엠피플스의 핵심 역량</span>
     </div>
-    <div style="border-top: 2px solid #0F1B2D; padding-top: 20px">
-      <span style="font-family: 'IBM Plex Mono', monospace; color: {{accent}}; font-weight: 500">02</span>
-      <h3 style="margin: 8px 0 10px; font-size: 21px; font-weight: 700">24/365 기술지원 체계</h3>
-      <p style="margin: 0; color: #4A5670; line-height: 1.6">수도권 고양 본사와 중부권 대전 지사를 연계하여 상시 장애 예방과 신속한 현장 대응을 지원합니다.</p>
+    <h2 style="margin: 0; font-size: clamp(24px, 2.6vw, 30px); line-height: 1.3; font-weight: 700; color: #0F1B2D; letter-spacing: -0.015em">신뢰할 수 있는 보안 파트너를 선택해야 하는 이유</h2>
+    <p style="margin: 8px 0 0; font-size: 15px; color: #4A5670; line-height: 1.55">풍부한 경험의 전문 엔지니어와 24/365 기술지원망, 검증된 최고 수준의 솔루션으로 안전한 인프라를 완성합니다.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px">
+    <!-- 01. 정보보안 전문가 그룹 -->
+    <div class="competency-card">
+      <div class="card-top-accent"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 6px">01</span>
+        <span style="font-size: 12px; font-weight: 600; color: #0284C7; background: #E0F2FE; padding: 3px 8px; border-radius: 4px">엔지니어 비중 87%</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px">
+        <div style="width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #EEF4FC 0%, #E0F2FE 100%); color: #1E6FE8; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+        <div>
+          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F1B2D; line-height: 1.3">정보보안 전문가 그룹</h3>
+          <span style="font-size: 12px; color: #64748B; font-weight: 500">풍부한 현장 구축 노하우</span>
+        </div>
+      </div>
+      <p style="margin: 0; color: #4A5670; font-size: 14px; line-height: 1.6">전체 임직원의 87%가 전문 엔지니어 및 보안 컨설팅 인력으로 구성되어 체계적인 기술 서비스를 제공합니다.</p>
+      <ul class="competency-checklist">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>특급·고급 보안 공인 전문 기술자 직접 설계 및 현장 구축</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>네트워크·시스템 보안 및 ISMS-P 인증 컨설팅 전담 조직</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>공공·국방·금융 분야 대규모 정보보호 구축 레퍼런스 보유</span>
+        </li>
+      </ul>
     </div>
-    <div style="border-top: 2px solid #0F1B2D; padding-top: 20px">
-      <span style="font-family: 'IBM Plex Mono', monospace; color: {{accent}}; font-weight: 500">03</span>
-      <h3 style="margin: 8px 0 10px; font-size: 21px; font-weight: 700">검증된 제품 라인업</h3>
-      <p style="margin: 0; color: #4A5670; line-height: 1.6">국내외 1위 벤더 및 공공·금융·국방 분야에서 신뢰성과 안전성이 입증된 최상위 솔루션만을 엄선 공급합니다.</p>
+
+    <!-- 02. 24/365 기술지원 체계 -->
+    <div class="competency-card">
+      <div class="card-top-accent"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 6px">02</span>
+        <span style="font-size: 12px; font-weight: 600; color: #16A34A; background: #DCFCE7; padding: 3px 8px; border-radius: 4px">24/365 전국 커버리지</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px">
+        <div style="width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #ECFDF5 0%, #DCFCE7 100%); color: #16A34A; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <div>
+          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F1B2D; line-height: 1.3">24/365 기술지원 체계</h3>
+          <span style="font-size: 12px; color: #64748B; font-weight: 500">본사(고양) · 지사(대전) 연계</span>
+        </div>
+      </div>
+      <p style="margin: 0; color: #4A5670; font-size: 14px; line-height: 1.6">수도권 고양 본사와 중부권 대전 지사를 연계하여 상시 장애 예방과 신속한 현장 대응을 지원합니다.</p>
+      <ul class="competency-checklist">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>24시간 365일 실시간 긴급 장애 접수 및 1:1 직통 엔지니어 대응</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>수도권 및 중부권(충청·세종·영호남) 2시간 이내 현장 출동</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>정기 예방 점검 및 취약점 펌웨어/보안 패치 선제적 무중단 적용</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 03. 검증된 제품 라인업 -->
+    <div class="competency-card">
+      <div class="card-top-accent"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 6px">03</span>
+        <span style="font-size: 12px; font-weight: 600; color: #7C3AED; background: #EDE9FE; padding: 3px 8px; border-radius: 4px">국내외 1위 벤더 엄선</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px">
+        <div style="width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); color: #7C3AED; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+        </div>
+        <div>
+          <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F1B2D; line-height: 1.3">검증된 제품 라인업</h3>
+          <span style="font-size: 12px; color: #64748B; font-weight: 500">CC · GS 1등급 공인 인증</span>
+        </div>
+      </div>
+      <p style="margin: 0; color: #4A5670; font-size: 14px; line-height: 1.6">국내외 1위 벤더 및 공공·금융·국방 분야에서 신뢰성과 안전성이 입증된 최상위 솔루션만을 엄선 공급합니다.</p>
+      <ul class="competency-checklist">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>망연계·SSL VPN·WAF·NAC 등 각 분야별 검증된 시장 1위 제품</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>국가정보원 보안기능확인서, CC인증(EAL4), GS 1등급 획득</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>이기종 멀티 벤더 장비 간 연동 최적화 및 단일 핫라인 유지보수</span>
+        </li>
+      </ul>
     </div>
   </div>
 
