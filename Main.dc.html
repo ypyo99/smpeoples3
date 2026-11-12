@@ -1390,7 +1390,14 @@ header.menu-open .mobile-drawer {
 <div style="display: grid; grid-template-columns: 130px 130px 190px minmax(0, 1.5fr) minmax(0, 1fr) 76px; gap: 20px; padding: 16px 0; border-bottom: 1px solid #D3DAE6; align-items: center">
 <span style="color: #4A5670">{{r.area}}</span>
 <strong style="font-weight: 700">{{r.type}}</strong>
-<span>{{r.vendor}} <span style="color: #4A5670">({{r.product}})</span></span>
+<div style="display: flex; flex-direction: column; gap: 4px; justify-content: center">
+  <div style="display: flex; align-items: center; gap: 6px; height: 22px">
+    <sc-for list="{{r.logoList}}" as="lg" hint-placeholder-count="1">
+      <img src="{{lg.src}}" alt="{{lg.alt}}" style="display: block; max-height: {{lg.h}}; max-width: {{lg.maxW}}; width: auto; height: auto; object-fit: contain">
+    </sc-for>
+  </div>
+  <span>{{r.vendor}} <span style="color: #4A5670">({{r.product}})</span></span>
+</div>
 <span>{{r.purpose}}</span>
 <span>{{r.cert}}</span>
 <a href="{{r.pdf}}" aria-label="{{r.product}} {{r.pdfLabel}}" style="font-weight: 600; padding: 10px 0">{{r.pdfLabel}}</a>
@@ -1762,6 +1769,33 @@ class Component extends DCLogic {
       sdn: { area: '가상화', areaId: 'virtual', type: 'SDN·IoT 보안', vendor: '아토리서치 · 아라드네트웍스', product: 'SDN 네트워크 & IoT 보안', name: 'SDN 네트워크 & IoT 보안', purpose: '클라우드·스마트시티·CCTV 관제망을 세분화해 횡적 이동 공격 차단', cert: '스마트시티 표준 규격', pdf: 'mailto:sales@smpeoples.kr', noPdf: true },
       csap: { area: '보안 인증 컨설팅', areaId: 'consult', type: '인증 컨설팅', vendor: '에스엠피플스 컨설팅본부', product: 'ISMS-P & CSAP 컨설팅', name: 'ISMS-P & CSAP 종합 컨설팅', purpose: 'CSAP 인증 획득 및 정보보호 관리체계(ISMS-P, ISO 27001) 수립 지원', cert: 'ISMS-P, ISO 27001, CSAP', pdf: 'mailto:sales@smpeoples.kr', noPdf: true }
     };
+
+    const logos = {
+      gate: ['images/hanssak.png'],
+      vpn: ['images/secuwiz.png'],
+      waf: ['images/piolink.png'],
+      wse: ['images/nile.png'],
+      sse: ['images/nile.png'],
+      nac: ['images/genians.png'],
+      ngs: ['images/hunesion.png'],
+      vdi: ['images/tilon.png'],
+      utm: ['images/secui.png', 'images/axgate.png'],
+      dlp: ['images/somansa.png'],
+      sdn: ['images/attoresearch.png', 'images/arad.png'],
+      csap: ['images/logo.svg']
+    };
+
+    Object.keys(P).forEach((k) => {
+      const srcs = logos[k] || [];
+      const names = P[k].vendor.split(' · ');
+      P[k].logoList = srcs.map((src, i) => ({
+        src,
+        alt: (names[i] || P[k].vendor) + ' 로고',
+        h: srcs.length > 1 ? '16px' : '22px',
+        maxW: srcs.length > 1 ? '55px' : '85px'
+      }));
+    });
+
     const all = [P.gate, P.vpn, P.waf, P.utm, P.nac, P.ngs, P.wse, P.sse, P.dlp, P.vdi, P.sdn, P.csap];
 
     const problemData = [
