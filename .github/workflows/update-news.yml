@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: 최신 KISA 보안공지 5건 수집 실행
+      - name: 최신 KISA 보안공지 10건 수집 실행
         run: node scripts/update_news.js
 
       - name: 변경 사항 확인 및 Git 자동 커밋 & 푸시
@@ -36,3 +36,4 @@ jobs:
           else
             echo "새로운 보안공지 변동 사항이 없습니다. 커밋을 생략합니다."
           fi
+

@@ -1448,7 +1448,7 @@ header.menu-open .mobile-drawer {
   <p style="margin: 10px 0 0; font-size: 17px; color: #D2DDEF; line-height: 1.55">KISA 보안 권고문과 주요 사이버 보안 위협 소식을 안내합니다.</p>
 </div>
 <div style="margin-top: 28px; border-top: 2px solid #0F1B2D">
-<sc-for list="{{news}}" as="n" hint-placeholder-count="5">
+<sc-for list="{{news}}" as="n" hint-placeholder-count="10">
 <a href="{{n.url}}" style="display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 18px 0; border-bottom: 1px solid #D3DAE6; color: #0F1B2D; text-decoration: none; align-items: baseline">
 <span style="flex: 0 0 130px; font-size: 14px; font-weight: 600; color: #4A5670">{{n.tag}}</span>
 <span style="flex: 1 1 520px; min-width: 0"><strong style="display: block; font-size: 18px; font-weight: 700">{{n.title}}</strong><span style="display: block; color: #4A5670">{{n.desc}}</span></span>
@@ -1771,12 +1771,87 @@ class Component extends DCLogic {
     ];
 
     const fallbackNews = [
-      { tag: '보안 패치 권고', title: 'Apache 제품 보안 업데이트 권고', desc: 'Apache 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72304', date: '2026-11-12' },
-      { tag: '보안 패치 권고', title: 'WordPress 플러그인 보안 업데이트 권고', desc: 'WordPress의 WPML Multilingual CMS 플러그인에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72303', date: '2026-11-12' },
-      { tag: '보안 패치 권고', title: 'Node.js 제품 보안 업데이트 권고', desc: 'OpenJS 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72302', date: '2026-11-12' },
-      { tag: '보안 패치 권고', title: 'Zoom 제품 보안 업데이트 권고', desc: 'Zoom사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72301', date: '2026-11-12' },
-      { tag: '보안 패치 권고', title: 'Synology 제품 보안 업데이트 권고', desc: 'Synology사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72300', date: '2026-11-12' }
-    ];
+      {
+            "tag": "보안 패치 권고",
+            "title": "Apache 제품 보안 업데이트 권고",
+            "desc": "Apache 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72304",
+            "date": "2026-11-12"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "WordPress 플러그인 보안 업데이트 권고",
+            "desc": "WordPress의 WPML Multilingual CMS 플러그인에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72303",
+            "date": "2026-11-12"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "Node.js 제품 보안 업데이트 권고",
+            "desc": "OpenJS 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72302",
+            "date": "2026-11-12"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "Zoom 제품 보안 업데이트 권고",
+            "desc": "Zoom사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72301",
+            "date": "2026-11-12"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "Synology 제품 보안 업데이트 권고",
+            "desc": "Synology사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72300",
+            "date": "2026-11-12"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "MS 11월 보안 위협에 따른 정기 보안 업데이트 권고",
+            "desc": "□ 11월 보안업데이트 개요 (총 13 종) 등급 : 긴급 (Critical) 8 종 , 중요 (Important) 5 종 발표일 : 2026.11.10.(화) 업데이트 내용",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72299",
+            "date": "2026-11-12"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "React 서버 컴포넌트 보안 업데이트 권고",
+            "desc": "React의 서버 컴포넌트 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72298",
+            "date": "2026-11-12"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "Ivanti 제품 보안 업데이트 권고",
+            "desc": "Ivanti사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72297",
+            "date": "2026-11-11"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "MongoDB 제품 보안 업데이트 권고",
+            "desc": "MongoDB사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72296",
+            "date": "2026-11-11"
+      },
+      {
+            "tag": "보안 패치 권고",
+            "title": "SAP 제품 보안 업데이트 권고",
+            "desc": "SAP사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+            "source": "KISA 보호나라",
+            "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72295",
+            "date": "2026-11-10"
+      }
+];
     const news = (this.state && Array.isArray(this.state.news) && this.state.news.length > 0)
       ? this.state.news
       : fallbackNews;

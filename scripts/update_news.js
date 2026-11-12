@@ -102,9 +102,9 @@ async function main() {
     throw new Error('KISA 게시판에서 항목을 찾을 수 없습니다.');
   }
 
-  // 상단 고정(공지) 제외 최신 게시글 5건 우선 선별 (부족 시 고정 포함)
+  // 상단 고정(공지) 제외 최신 게시글 10건 우선 선별 (부족 시 고정 포함)
   const regularItems = rawItems.filter(it => !it.isPinned);
-  const selected = (regularItems.length >= 5 ? regularItems : rawItems).slice(0, 5);
+  const selected = (regularItems.length >= 10 ? regularItems : rawItems).slice(0, 10);
 
   const newsList = [];
 
