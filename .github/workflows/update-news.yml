@@ -1,4 +1,4 @@
-name: KISA 최신 보안공지 자동 수집
+name: KISA 보안공지 및 사이버 보안 위협 뉴스 자동 수집
 
 on:
   schedule:
@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: 최신 KISA 보안공지 20건 수집 실행
+      - name: 최신 보안공지 및 사이버 위협 뉴스 20건 수집 실행
         run: node scripts/update_news.js
 
       - name: 변경 사항 확인 및 Git 자동 커밋 & 푸시
@@ -31,7 +31,7 @@ jobs:
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git add data/news.json
-            git commit -m "chore: KISA 최신 보안공지 자동 갱신 [skip ci]"
+            git commit -m "chore: 최신 보안공지 및 사이버 위협 뉴스 자동 갱신 [skip ci]"
             git push origin main
           else
             echo "새로운 보안공지 변동 사항이 없습니다. 커밋을 생략합니다."

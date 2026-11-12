@@ -1,13 +1,14 @@
 /**
- * KISA 보호나라(KrCERT/CC) 보안공지 최신 20건 자동 수집 스크립트
- * 에스엠피플스(SM Peoples) 보안뉴스 섹션 자동 갱신용
+ * KISA 보호나라 보안공지 + 보안뉴스(BoanNews) 사이버 보안 위협 소식 통합 수집 스크립트
+ * 에스엠피플스(SM Peoples) 보안뉴스 섹션 자동 갱신용 (총 20건)
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const OUTPUT_PATH = path.resolve(__dirname, '../data/news.json');
-const TARGET_COUNT = 20;
+const TARGET_TOTAL = 20;
+const HALF_TARGET = 10;
 
 async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
   const controller = new AbortController();
@@ -55,7 +56,7 @@ function cleanOverview(html) {
   return text;
 }
 
-function determineTag(title) {
+function determineKisaTag(title) {
   if (title.includes('취약점') || title.includes('Zero-Day') || title.includes('0-day')) {
     return '취약점 경보';
   }
@@ -68,84 +69,157 @@ function determineTag(title) {
   return 'KISA 보안공지';
 }
 
-async function main() {
-  console.log(`[${new Date().toISOString()}] KISA 보안공지 최신 ${TARGET_COUNT}건 수집 시작...`);
-
-  const rawItems = [];
-  const seenNttIds = new Set();
-
-  // KISA 게시판은 페이지당 일반 글 10건 제공하므로 다중 페이지 순회
-  for (let page = 1; page <= 4; page++) {
-    const listUrl = `https://www.boho.or.kr/kr/bbs/list.do?menuNo=205020&bbsId=B0000133&pageIndex=${page}`;
-    const res = await fetchWithTimeout(listUrl);
-    if (!res.ok) {
-      console.warn(`KISA list fetch page ${page} failed: ${res.status}`);
-      break;
+function parseRssDate(pubDateStr) {
+  try {
+    const d = new Date(pubDateStr);
+    if (!isNaN(d.getTime())) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
     }
+  } catch (e) {}
+  return new Date().toISOString().slice(0, 10);
+}
 
+function determineBoanTag(title, desc) {
+  const text = (title + ' ' + (desc || '')).toLowerCase();
+  if (text.includes('해킹') || text.includes('유출') || text.includes('침해') || text.includes('랜섬웨어') || text.includes('피해')) {
+    return '해킹·침해 위협';
+  }
+  if (text.includes('악성') || text.includes('스파이웨어') || text.includes('악질') || text.includes('위협') || text.includes('공격') || text.includes('범죄')) {
+    return '사이버 위협 분석';
+  }
+  if (text.includes('취약점') || text.includes('제로데이') || text.includes('zero-day') || text.includes('결함') || text.includes('패치')) {
+    return '취약점 경보';
+  }
+  if (text.includes('ai') || text.includes('암호') || text.includes('솔루션') || text.includes('기술') || text.includes('인증')) {
+    return '보안 기술 동향';
+  }
+  return '보안 이슈';
+}
+
+async function collectKisaNews(limit = 10) {
+  const items = [];
+  try {
+    const listUrl = 'https://www.boho.or.kr/kr/bbs/list.do?menuNo=205020&bbsId=B0000133&pageIndex=1';
+    const res = await fetchWithTimeout(listUrl);
+    if (!res.ok) return items;
     const html = await res.text();
     const rowRegex = /<td class="num">([^<]*)<\/td>[\s\S]*?<a href="([^"]*nttId=(\d+)[^"]*)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?<td class="date">([^<]*)<\/td>/g;
     let m;
-
+    const selected = [];
     while ((m = rowRegex.exec(html)) !== null) {
-      const isPinned = m[1].includes('공지');
+      if (m[1].includes('공지')) continue;
       const relUrl = m[2].replace(/&amp;/g, '&');
-      const nttId = m[3];
-      const title = m[4].replace(/<[^>]+>/g, '').trim();
-      const date = m[5].trim();
-
-      if (!seenNttIds.has(nttId)) {
-        seenNttIds.add(nttId);
-        rawItems.push({
-          isPinned,
-          nttId,
-          title,
-          date,
-          url: 'https://www.boho.or.kr' + (relUrl.startsWith('/') ? relUrl : '/' + relUrl)
-        });
-      }
+      selected.push({
+        nttId: m[3],
+        title: m[4].replace(/<[^>]+>/g, '').trim(),
+        date: m[5].trim(),
+        url: 'https://www.boho.or.kr' + (relUrl.startsWith('/') ? relUrl : '/' + relUrl)
+      });
+      if (selected.length >= limit) break;
     }
 
-    const regularCount = rawItems.filter(it => !it.isPinned).length;
-    if (regularCount >= TARGET_COUNT) break;
+    for (const item of selected) {
+      let desc = '';
+      try {
+        const detailRes = await fetchWithTimeout(item.url, {}, 5000);
+        if (detailRes.ok) {
+          const detailHtml = await detailRes.text();
+          desc = cleanOverview(detailHtml);
+        }
+      } catch (e) {}
+
+      if (!desc) {
+        desc = `${item.title} 관련 KISA 보호나라 공식 권고문입니다. 취약점 영향 제품군 확인 및 최신 보안 패치 적용을 권고합니다.`;
+      }
+
+      items.push({
+        tag: determineKisaTag(item.title),
+        title: item.title,
+        desc,
+        source: 'KISA 보호나라',
+        url: item.url,
+        date: item.date
+      });
+    }
+  } catch (err) {
+    console.error('KISA 수집 오류:', err.message);
   }
+  return items;
+}
 
-  if (rawItems.length === 0) {
-    throw new Error('KISA 게시판에서 항목을 찾을 수 없습니다.');
+async function collectBoanNews(limit = 10) {
+  const items = [];
+  try {
+    const rssUrl = 'https://cdn.boannews.com/rss/gn_rss_allArticle.xml';
+    const res = await fetchWithTimeout(rssUrl, {}, 6000);
+    if (!res.ok) return items;
+    const xml = await res.text();
+    const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+    let m;
+    while ((m = itemRegex.exec(xml)) !== null && items.length < limit) {
+      const c = m[1];
+      const titleMatch = c.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/);
+      const linkMatch = c.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/);
+      const descMatch = c.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/);
+      const dateMatch = c.match(/<pubDate>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/pubDate>/);
+
+      const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '').trim() : '';
+      const url = linkMatch ? linkMatch[1].trim() : '';
+      let desc = descMatch ? descMatch[1].replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim() : '';
+      const date = parseRssDate(dateMatch ? dateMatch[1] : '');
+
+      if (!title || !url) continue;
+
+      if (desc.length > 140) {
+        const dotIdx = desc.indexOf('.', 70);
+        if (dotIdx !== -1 && dotIdx <= 150) {
+          desc = desc.slice(0, dotIdx + 1);
+        } else {
+          desc = desc.slice(0, 135) + '...';
+        }
+      }
+
+      items.push({
+        tag: determineBoanTag(title, desc),
+        title,
+        desc,
+        source: '보안뉴스',
+        url,
+        date
+      });
+    }
+  } catch (err) {
+    console.error('보안뉴스 수집 오류:', err.message);
   }
+  return items;
+}
 
-  // 상단 고정(공지) 제외 최신 게시글 TARGET_COUNT건 우선 선별 (부족 시 고정 포함)
-  const regularItems = rawItems.filter(it => !it.isPinned);
-  const selected = (regularItems.length >= TARGET_COUNT ? regularItems : rawItems).slice(0, TARGET_COUNT);
+async function main() {
+  console.log(`[${new Date().toISOString()}] KISA 보안공지 및 사이버 보안 위협 뉴스 통합 수집 시작...`);
 
+  const [kisaList, boanList] = await Promise.all([
+    collectKisaNews(HALF_TARGET),
+    collectBoanNews(HALF_TARGET)
+  ]);
+
+  console.log(`수집 결과: KISA 공지 ${kisaList.length}건, 보안뉴스 기사 ${boanList.length}건`);
+
+  // 두 소스를 인터리빙(교차)하여 사용자가 권고문과 위협 기사를 고르게 볼 수 있도록 구성
   const newsList = [];
+  const maxLen = Math.max(kisaList.length, boanList.length);
+  for (let i = 0; i < maxLen; i++) {
+    if (i < boanList.length) newsList.push(boanList[i]);
+    if (i < kisaList.length) newsList.push(kisaList[i]);
+  }
 
-  for (const item of selected) {
-    let desc = '';
-    const tag = determineTag(item.title);
+  // 총 20건 제한
+  const finalNews = newsList.slice(0, TARGET_TOTAL);
 
-    try {
-      const detailRes = await fetchWithTimeout(item.url, {}, 6000);
-      if (detailRes.ok) {
-        const detailHtml = await detailRes.text();
-        desc = cleanOverview(detailHtml);
-      }
-    } catch (err) {
-      console.warn(`상세 내용 수집 실패 (${item.nttId}):`, err.message);
-    }
-
-    if (!desc) {
-      desc = `${item.title} 관련 KISA 보호나라 공식 권고문입니다. 취약점 영향 제품군 확인 및 최신 보안 패치 적용을 권고합니다.`;
-    }
-
-    newsList.push({
-      tag,
-      title: item.title,
-      desc,
-      source: 'KISA 보호나라',
-      url: item.url,
-      date: item.date
-    });
+  if (finalNews.length === 0) {
+    throw new Error('보안뉴스를 수집하지 못했습니다.');
   }
 
   // 기존 파일과 비교
@@ -154,7 +228,7 @@ async function main() {
     try {
       const existing = fs.readFileSync(OUTPUT_PATH, 'utf8');
       const existingData = JSON.parse(existing);
-      if (JSON.stringify(existingData) === JSON.stringify(newsList)) {
+      if (JSON.stringify(existingData) === JSON.stringify(finalNews)) {
         hasChanged = false;
       }
     } catch (e) {
@@ -168,9 +242,9 @@ async function main() {
     fs.mkdirSync(dir, { recursive: true });
   }
 
-  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(newsList, null, 2) + '\n', 'utf8');
+  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(finalNews, null, 2) + '\n', 'utf8');
 
-  console.log(`[완료] 총 ${newsList.length}건 수집 완료.`);
+  console.log(`[완료] 총 ${finalNews.length}건 저장 완료 (KISA: ${kisaList.length}건, 보안뉴스: ${boanList.length}건).`);
   console.log('변경 여부 (hasChanged):', hasChanged);
   return hasChanged;
 }
