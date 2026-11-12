@@ -1542,7 +1542,8 @@ class Component extends DCLogic {
       kind: 'sales',
       who: '',
       message: '',
-      countProgress: 0
+      countProgress: 0,
+      news: null
     };
     this._counterInterval = null;
     this._counterStarted = false;
@@ -1551,6 +1552,16 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.initCounterAnimation();
+    if (typeof fetch !== 'undefined') {
+      fetch('./data/news.json')
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            this.setState({ news: data });
+          }
+        })
+        .catch(() => {});
+    }
   }
 
   componentWillUnmount() {
