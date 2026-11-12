@@ -1239,7 +1239,7 @@ header.menu-open .mobile-drawer {
 <p style="margin: 24px 0 0; font-size: 18px; color: #E3ECF9; max-width: 34em">에스엠피플스㈜는 고객 환경에 가장 적합한 국내외 검증된 벤더의 핵심 보안 솔루션을 제안·공급하고, 전문 엔지니어가 직접 구축부터 운영 기술지원까지 책임지는 통합 보안 파트너입니다.</p>
 <div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px">
 <a href="Solutions.dc.html" class="btn-white-hero" style="background: #FFFFFF; color: #0B2E5E; font-weight: 600; padding: 12px 24px; border-radius: 6px; text-decoration: none">취급 솔루션 및 소개서 보기</a>
-<a href="Support.dc.html#company" class="btn-outline-hero" style="color: #FFFFFF; font-weight: 600; padding: 11px 24px; border: 1px solid #BCD0EE; border-radius: 6px; text-decoration: none">회사소개 보기</a>
+<a href="Company.dc.html" class="btn-outline-hero" style="color: #FFFFFF; font-weight: 600; padding: 11px 24px; border: 1px solid #BCD0EE; border-radius: 6px; text-decoration: none">회사소개 보기</a>
 </div>
 </div>
 <div style="flex: 1 1 500px; min-width: 0; background: #FFFFFF; color: #0F1B2D; border-radius: 10px; padding: 32px">
@@ -1563,75 +1563,136 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() {
-    if (this._counterInterval) {
-      clearInterval(this._counterInterval);
-      this._counterInterval = null;
+    if (this._rafId) {
+      const caf = window.cancelAnimationFrame || clearTimeout;
+      caf(this._rafId);
+      this._rafId = null;
     }
     if (this._observer) {
       this._observer.disconnect();
       this._observer = null;
     }
+    if (this._onScrollOrResize) {
+      window.removeEventListener('scroll', this._onScrollOrResize);
+      window.removeEventListener('resize', this._onScrollOrResize);
+      window.removeEventListener('touchmove', this._onScrollOrResize);
+    }
   }
 
   initCounterAnimation() {
-    if (this._counterStarted) return;
+    this._inView = false;
+    this._animating = false;
+    this._rafId = null;
 
-    const sec = document.querySelector('section[aria-label="회사 현황"]');
-    const isVisibleNow = () => {
-      if (!sec) return true;
-      const rect = sec.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      return rect.top < vh && rect.bottom > 0;
+    const getTarget = () => document.querySelector('section[aria-label="회사 현황"]') || document.querySelector('[data-stat="clients"]')?.closest('section');
+
+    const updateDomNumbers = (progress) => {
+      const clientsEl = document.querySelector('[data-stat="clients"]');
+      const engineersEl = document.querySelector('[data-stat="engineers"]');
+      const supportEl = document.querySelector('[data-stat="support"]');
+      const vendorsEl = document.querySelector('[data-stat="vendors"]');
+      const countriesEl = document.querySelector('[data-stat="countries"]');
+
+      if (clientsEl) clientsEl.innerText = Math.round(100 * progress) + '+';
+      if (engineersEl) engineersEl.innerText = Math.round(87 * progress) + '%';
+      if (supportEl) supportEl.innerText = Math.round(24 * progress) + '/' + Math.round(365 * progress);
+      if (vendorsEl) vendorsEl.innerText = Math.round(15 * progress);
+      if (countriesEl) countriesEl.innerText = Math.round(8 * progress) + '개국+';
     };
 
-    if (isVisibleNow()) {
-      this.startCounterAnimation();
-      return;
-    }
+    const checkVisibility = () => {
+      const el = getTarget();
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
 
-    if (typeof IntersectionObserver !== 'undefined' && sec) {
-      this._observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting || entry.intersectionRatio > 0) {
-            this.startCounterAnimation();
-            if (this._observer) {
-              this._observer.disconnect();
-              this._observer = null;
-            }
-          }
+      // 스마트폰 및 PC 화면에 숫자가 실제로 표시되는 순간 감지:
+      // 요소 상단이 화면 하단 위로 최소 50~100px(화면 높이의 12%) 이상 들어왔을 때 카운팅 시작
+      const triggerThreshold = Math.min(100, Math.max(45, vh * 0.12));
+      const isVisible = (rect.top <= vh - triggerThreshold) && (rect.bottom >= 40);
+      const isOutOfView = (rect.bottom < -60) || (rect.top > vh + 60);
+
+      if (isVisible) {
+        if (!this._inView) {
+          this._inView = true;
+          this.startCounterAnimation(updateDomNumbers);
+        }
+      } else if (isOutOfView) {
+        if (this._inView && !this._animating) {
+          this._inView = false;
+          updateDomNumbers(0);
+          this.setState({ countProgress: 0 });
+        }
+      }
+    };
+
+    setTimeout(checkVisibility, 80);
+
+    let scrollTicking = false;
+    this._onScrollOrResize = () => {
+      if (!scrollTicking) {
+        scrollTicking = true;
+        const raf = window.requestAnimationFrame || ((cb) => setTimeout(cb, 16));
+        raf(() => {
+          checkVisibility();
+          scrollTicking = false;
         });
-      }, { threshold: 0 });
-      this._observer.observe(sec);
-    } else {
-      this.startCounterAnimation();
+      }
+    };
+
+    window.addEventListener('scroll', this._onScrollOrResize, { passive: true });
+    window.addEventListener('resize', this._onScrollOrResize, { passive: true });
+    window.addEventListener('touchmove', this._onScrollOrResize, { passive: true });
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const el = getTarget();
+      if (el) {
+        this._observer = new IntersectionObserver(() => {
+          checkVisibility();
+        }, {
+          threshold: [0, 0.1, 0.25],
+          rootMargin: '0px 0px -10% 0px'
+        });
+        this._observer.observe(el);
+      }
     }
   }
 
-  startCounterAnimation() {
-    if (this._counterStarted) return;
-    this._counterStarted = true;
+  startCounterAnimation(updateDomNumbers) {
+    if (this._animating) return;
+    this._animating = true;
 
-    // 숫자 카운팅: 1.5초(1500ms) 동안 증가
-    const duration = 1500;
+    if (this._rafId) {
+      const caf = window.cancelAnimationFrame || clearTimeout;
+      caf(this._rafId);
+      this._rafId = null;
+    }
+
+    const duration = 1500; // 1.5초(1500ms) 동안 증가
     const startTime = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+    const easeOut = (t) => 1 - Math.pow(1 - t, 3); // 점점 속도가 느려지며 부드럽게 멈추는 Ease-Out Cubic 공식
 
-    // 이징 효과 (Ease-Out Cubic): 점점 속도가 느려지며 부드럽게 멈춤
-    const easeOut = (t) => 1 - Math.pow(1 - t, 3);
-
-    this._counterInterval = setInterval(() => {
+    const frame = () => {
       const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = easeOut(progress);
 
+      if (updateDomNumbers) updateDomNumbers(eased);
+
       if (progress >= 1) {
-        clearInterval(this._counterInterval);
-        this._counterInterval = null;
+        this._animating = false;
+        this._rafId = null;
+        if (updateDomNumbers) updateDomNumbers(1);
         this.setState({ countProgress: 1 });
       } else {
-        this.setState({ countProgress: eased });
+        const raf = window.requestAnimationFrame || ((cb) => setTimeout(cb, 16));
+        this._rafId = raf(frame);
       }
-    }, 20);
+    };
+
+    const raf = window.requestAnimationFrame || ((cb) => setTimeout(cb, 16));
+    this._rafId = raf(frame);
   }
 
   renderVals() {
