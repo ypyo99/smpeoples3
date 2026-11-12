@@ -888,6 +888,62 @@ header.menu-open .mobile-drawer {
   background: linear-gradient(135deg, #EEF4FC 0%, #E2EDFB 100%) !important;
   color: #1E6FE8 !important;
 }
+
+/* ===== 통합 매니지먼트 서비스 인터랙션 ===== */
+.mgmt-service-card {
+  background: #FFFFFF;
+  border: 1px solid #D3DAE6;
+  border-radius: 12px;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(15, 27, 45, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+.mgmt-service-card:hover {
+  transform: translateY(-4px);
+  border-color: #1E6FE8;
+  box-shadow: 0 12px 28px rgba(30, 111, 232, 0.12);
+}
+.mgmt-service-card .card-top-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1E6FE8 0%, #00D2FF 100%);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+.mgmt-service-card:hover .card-top-accent {
+  opacity: 1;
+}
+.mgmt-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #EEF2F6;
+  padding-top: 16px;
+  flex-grow: 1;
+}
+.mgmt-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #334155;
+  line-height: 1.5;
+}
+.mgmt-checklist svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: #1E6FE8;
+}
 </style>
 </helmet>
 <div style="background: #F3F6FB; color: #0F1B2D; font-family: 'IBM Plex Sans KR', system-ui, sans-serif; font-size: 16px; line-height: 1.65; word-break: keep-all">
@@ -979,23 +1035,146 @@ header.menu-open .mobile-drawer {
 
   <!-- 통합 매니지먼트 서비스 -->
   <div style="margin-bottom: 56px">
-    <h2 style="margin: 0; font-size: clamp(24px, 2.6vw, 30px); line-height: 1.3; font-weight: 700; color: #0F1B2D; letter-spacing: -0.015em">통합 매니지먼트 서비스</h2>
-    <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px">
-      <div style="background: #F3F6FB; border: 1px solid #D3DAE6; border-radius: 8px; padding: 24px 28px; border-top: 4px solid #1E6FE8">
-        <h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 700; color: #0F1B2D">통합유지보수</h3>
-        <p style="margin: 0; color: #4A5670; font-size: 15px; line-height: 1.6">공공·국방·금융 100여 고객사의 시스템을 통합 유지보수합니다.</p>
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px">
+      <div style="display: inline-flex; align-items: center; gap: 8px">
+        <span style="font-size: 13px; font-weight: 700; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em">Full-Lifecycle Operations</span>
+        <span style="font-size: 13px; color: #64748B; font-weight: 500">원스톱 유지관리 체계</span>
       </div>
-      <div style="background: #F3F6FB; border: 1px solid #D3DAE6; border-radius: 8px; padding: 24px 28px; border-top: 4px solid #1E6FE8">
-        <h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 700; color: #0F1B2D">상주·예방 점검</h3>
-        <p style="margin: 0; color: #4A5670; font-size: 15px; line-height: 1.6">전문 기술인력 상주와 정기·긴급 예방 점검을 수행합니다.</p>
+      <h2 style="margin: 0; font-size: clamp(24px, 2.6vw, 30px); line-height: 1.3; font-weight: 700; color: #0F1B2D; letter-spacing: -0.015em">통합 매니지먼트 서비스</h2>
+      <p style="margin: 0; font-size: 15px; color: #4A5670; line-height: 1.55">단순 장애 사후 대응을 넘어, 인프라 진단부터 상주 점검, 기술이전, 정량적 SLA 보증까지 전 생애주기를 체계적으로 밀착 지원합니다.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px">
+      <!-- 01. 통합유지보수 -->
+      <div class="mgmt-service-card">
+        <div class="card-top-accent"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 6px">01</span>
+          <span style="font-size: 12px; font-weight: 600; color: #0284C7; background: #E0F2FE; padding: 3px 8px; border-radius: 4px">고객사 100+ 통합 관리</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px">
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #EEF4FC 0%, #E0F2FE 100%); color: #1E6FE8; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F1B2D; line-height: 1.3">통합유지보수</h3>
+            <span style="font-size: 12px; color: #64748B; font-weight: 500">SPOC 단일 창구 운영</span>
+          </div>
+        </div>
+        <p style="margin: 0; color: #4A5670; font-size: 14px; line-height: 1.6">공공·국방·금융 등 다양한 이기종 인프라와 네트워크를 단일 핫라인으로 일괄 통합 관리합니다.</p>
+        <ul class="mgmt-checklist">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>공공·국방·금융 엔터프라이즈 100여 고객사 통합 유지관리</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>이기종 멀티 벤더 장비 단일 핫라인(SPOC) 일괄 창구 지원</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>24/365 긴급 장애 접수 및 2시간 이내 현장 긴급 출동 체계</span>
+          </li>
+        </ul>
       </div>
-      <div style="background: #F3F6FB; border: 1px solid #D3DAE6; border-radius: 8px; padding: 24px 28px; border-top: 4px solid #1E6FE8">
-        <h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 700; color: #0F1B2D">교육·기술이전</h3>
-        <p style="margin: 0; color: #4A5670; font-size: 15px; line-height: 1.6">안정적인 인프라 운영을 위해 고객사 교육과 기술이전을 제공합니다.</p>
+
+      <!-- 02. 상주·예방 점검 -->
+      <div class="mgmt-service-card">
+        <div class="card-top-accent"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 6px">02</span>
+          <span style="font-size: 12px; font-weight: 600; color: #16A34A; background: #DCFCE7; padding: 3px 8px; border-radius: 4px">사전 장애 차단</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px">
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #ECFDF5 0%, #DCFCE7 100%); color: #16A34A; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F1B2D; line-height: 1.3">상주 · 예방 점검</h3>
+            <span style="font-size: 12px; color: #64748B; font-weight: 500">무중단 선제 예방</span>
+          </div>
+        </div>
+        <p style="margin: 0; color: #4A5670; font-size: 14px; line-height: 1.6">공인 기술 인력의 고객사 상주와 정기 정밀 점검을 통해 장애 요인을 사전에 완벽히 차단합니다.</p>
+        <ul class="mgmt-checklist">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>공인 자격 전문 엔지니어 고객사 전담 상주 및 순회 점검</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>월간·분기별 시스템 무중단 정기 정밀 진단 및 성능 점검</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>최신 보안 취약점 사전 식별 및 긴급 펌웨어/보안 패치 선제 적용</span>
+          </li>
+        </ul>
       </div>
-      <div style="background: #F3F6FB; border: 1px solid #D3DAE6; border-radius: 8px; padding: 24px 28px; border-top: 4px solid #1E6FE8">
-        <h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 700; color: #0F1B2D">SLA 성과 관리</h3>
-        <p style="margin: 0; color: #4A5670; font-size: 15px; line-height: 1.6">SLA를 기반으로 성과 지표를 체계적으로 관리합니다.</p>
+
+      <!-- 03. 교육·기술이전 -->
+      <div class="mgmt-service-card">
+        <div class="card-top-accent"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 6px">03</span>
+          <span style="font-size: 12px; font-weight: 600; color: #D97706; background: #FEF3C7; padding: 3px 8px; border-radius: 4px">운영 역량 내재화</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px">
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); color: #D97706; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="16" y2="7"></line><line x1="9" y1="11" x2="14" y2="11"></line></svg>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F1B2D; line-height: 1.3">교육 · 기술이전</h3>
+            <span style="font-size: 12px; color: #64748B; font-weight: 500">실무 중심 노하우 전수</span>
+          </div>
+        </div>
+        <p style="margin: 0; color: #4A5670; font-size: 14px; line-height: 1.6">고객사 실무자의 자체 운영 역량 강화를 위해 체계적인 실무 교육과 운영 노하우를 이전합니다.</p>
+        <ul class="mgmt-checklist">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>솔루션 도입 단계별 관리자 및 실무자 맞춤형 기술 교육 실시</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>긴급 상황 발생 시 관리자 1차 초동 대응 런북 및 매뉴얼 전수</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>고객사 전용 인프라 운영 가이드북 및 아키텍처 문서 제공</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 04. SLA 성과 관리 -->
+      <div class="mgmt-service-card">
+        <div class="card-top-accent"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: #1E6FE8; background: #EEF4FC; padding: 4px 10px; border-radius: 6px">04</span>
+          <span style="font-size: 12px; font-weight: 600; color: #7C3AED; background: #EDE9FE; padding: 3px 8px; border-radius: 4px">정량적 품질 보증</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px">
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); color: #7C3AED; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0F1B2D; line-height: 1.3">SLA 성과 관리</h3>
+            <span style="font-size: 12px; color: #64748B; font-weight: 500">투명한 정량 지표</span>
+          </div>
+        </div>
+        <p style="margin: 0; color: #4A5670; font-size: 14px; line-height: 1.6">SLA(서비스 수준 협약)를 기반으로 장애 처리 속도와 품질 지표를 정량적으로 관리·보고합니다.</p>
+        <ul class="mgmt-checklist">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>장애 복구 목표 시간(MTTR) 엄격 준수 및 고품질 SLA 보증</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>월간·분기별 유지관리 수행 실적 및 통계 분석 리포트 제공</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>인프라 성능 최적화 및 차세대 보안 인프라 고도화 정기 컨설팅</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
