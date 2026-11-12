@@ -1770,13 +1770,16 @@ class Component extends DCLogic {
       '서해선 복선철도 MPLS-TP 및 네트워크 장비 구축'
     ];
 
-    const news = [
-      { tag: 'KISA 보안공지', title: 'MS 8월 보안 위협에 따른 정기 보안 업데이트 권고', desc: 'Microsoft 주요 제품의 원격 코드 실행 및 권한 상승 취약점에 대응하기 위한 정기 보안 패치 적용 권고입니다.', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=71167' },
-      { tag: '취약점 경보', title: '시트릭스 코드 주입 취약점', desc: '원격 접속 및 가상화 인프라 환경의 코드 주입 취약점 분석과 보안 패치 권고 소식입니다.', source: '보안뉴스', url: 'https://www.boannews.com/media/view.asp?idx=120762' },
-      { tag: '보안 위협 분석', title: '부채널 공격 기법 발견돼', desc: '하드웨어와 연산 과정의 물리적·시간적 특성을 이용한 신종 부채널 공격 기법 관련 보도입니다.', source: '보안뉴스', url: 'https://www.boannews.com/media/view.asp?idx=120727' },
-      { tag: 'KISA 보안공지', title: '지니언스 NAC 보안 업데이트 권고', desc: 'NAC 솔루션 운영 환경의 보안성 강화를 위한 최신 보안 업데이트 적용 권고입니다.', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=71160' },
-      { tag: 'KISA 보안공지', title: 'Fortinet 보안 업데이트 권고', desc: 'Fortinet 제품군 취약점 악용을 예방하기 위한 보안 패치 및 최신 펌웨어 업데이트 권고입니다.', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=71129' }
+    const fallbackNews = [
+      { tag: '보안 패치 권고', title: 'Apache 제품 보안 업데이트 권고', desc: 'Apache 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72304', date: '2026-11-12' },
+      { tag: '보안 패치 권고', title: 'WordPress 플러그인 보안 업데이트 권고', desc: 'WordPress의 WPML Multilingual CMS 플러그인에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72303', date: '2026-11-12' },
+      { tag: '보안 패치 권고', title: 'Node.js 제품 보안 업데이트 권고', desc: 'OpenJS 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72302', date: '2026-11-12' },
+      { tag: '보안 패치 권고', title: 'Zoom 제품 보안 업데이트 권고', desc: 'Zoom사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72301', date: '2026-11-12' },
+      { tag: '보안 패치 권고', title: 'Synology 제품 보안 업데이트 권고', desc: 'Synology사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표. 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고', source: 'KISA 보호나라', url: 'https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&menuNo=205020&nttId=72300', date: '2026-11-12' }
     ];
+    const news = (this.state && Array.isArray(this.state.news) && this.state.news.length > 0)
+      ? this.state.news
+      : fallbackNews;
 
     const interestLabels = ['망연계 (한싹)', 'SSL VPN (시큐위즈)', '웹방화벽 (파이오링크)', '웹 취약점진단', '서버 취약점진단', 'NAC (지니언스)', '시스템 접근제어 (휴네시온)', '데스크톱 가상화 (틸론)', 'UTM·NGFW (시큐아이·엑스게이트)', '개인정보보호·DLP (소만사)', 'SDN·IoT 보안', 'ISMS-P·CSAP 컨설팅'];
     const chosen = this.state.interests;

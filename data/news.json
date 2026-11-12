@@ -1,0 +1,42 @@
+[
+  {
+    "tag": "보안 패치 권고",
+    "title": "Apache 제품 보안 업데이트 권고",
+    "desc": "Apache 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+    "source": "KISA 보호나라",
+    "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72304",
+    "date": "2026-11-12"
+  },
+  {
+    "tag": "보안 패치 권고",
+    "title": "WordPress 플러그인 보안 업데이트 권고",
+    "desc": "WordPress의 WPML Multilingual CMS 플러그인에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+    "source": "KISA 보호나라",
+    "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72303",
+    "date": "2026-11-12"
+  },
+  {
+    "tag": "보안 패치 권고",
+    "title": "Node.js 제품 보안 업데이트 권고",
+    "desc": "OpenJS 재단은 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+    "source": "KISA 보호나라",
+    "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72302",
+    "date": "2026-11-12"
+  },
+  {
+    "tag": "보안 패치 권고",
+    "title": "Zoom 제품 보안 업데이트 권고",
+    "desc": "Zoom사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+    "source": "KISA 보호나라",
+    "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72301",
+    "date": "2026-11-12"
+  },
+  {
+    "tag": "보안 패치 권고",
+    "title": "Synology 제품 보안 업데이트 권고",
+    "desc": "Synology사는 자사 제품에서 발생하는 취약점을 해결한 보안 업데이트 발표 영향을 받는 버전을 사용 중인 사용자는 해결 방안에 따라 최신 버전으로 업데이트 권고",
+    "source": "KISA 보호나라",
+    "url": "https://www.boho.or.kr/kr/bbs/view.do?searchCnd=&bbsId=B0000133&searchWrd=&menuNo=205020&pageIndex=1&categoryCode=&nttId=72300",
+    "date": "2026-11-12"
+  }
+]
